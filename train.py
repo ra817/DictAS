@@ -20,46 +20,34 @@ from models.prompt_ensemble import encode_text_with_prompt_ensemble
 import open_clip_local
 
 
+#Main training function
 def train(args):
+
+    #checking for device(cpu/gpu)
     device = "cuda" if torch.cuda.is_available() else "cpu"
+
+    #directory to save finetuned model
     save_path = args.save_path
     if not os.path.exists(save_path):
         os.makedirs(save_path)
+
+    #loggers
     log_path = os.path.join(save_path,"result.txt")
+
+    #this list contain which layers of model(backbone) we will pick for futher analysis(like here 6th, 12th, 18th & 24th layer)
     features_list  = args.features_list 
+    #backbone model details(layers, version etc.)
     with open(args.config_path, 'r') as f:
         model_configs = json.load(f)
     
-    # We retained the OpenCLIP interface to enable DictAS to support a broader range of backbones.
-    # -------------------------------------------------------------------------------------------------
-    
-    # Example 1 : The pretrained model from huggingface laion/CLIP-ViT-L-14-DataComp.XL-s13B-b90K
-    '''
+    #backbone loading
     model_CLIP, _, _ = open_clip_local.create_model_and_transforms("hf-hub:laion/CLIP-ViT-L-14-DataComp.XL-s13B-b90K", img_size= args.image_size) 
     tokenizer = open_clip_local.get_tokenizer("hf-hub:laion/CLIP-ViT-L-14-DataComp.XL-s13B-b90K")
     model_CLIP = model_CLIP.to(device)
     model_CLIP.train()
-    '''
-
-    # Example 2 : The pretrained model from OpenAI CLIP
-    '''
-    model_CLIP, _, _ = open_clip_local.create_model_and_transforms(args.model, pretrained= args.pretrained, img_size= args.image_size) 
-    tokenizer = open_clip_local.get_tokenizer(args.model)
-    model_CLIP = model_CLIP.to(device)
-    model_CLIP.train()
-    '''
-    
-    
-    # -------------------------------------------------------------------------------------------------
-    # This is from our own implementation of the CLIP model, which only supports the OpenAI pretrained models ViT-B-16, ViT-L-14, and ViT-L-14-336.
-
-    model_CLIP , _ , _ = Load_CLIP(args.image_size, args.pretrained_path , device=device) 
-    model_CLIP.to(device)
-    tokenizer = tokenize
-    model_CLIP.train()
     
 
-    # ------------------Log-----------------------#
+    #logging
     root_logger = logging.getLogger()
     for handler in root_logger.handlers[:]:
         root_logger.removeHandler(handler)
@@ -79,10 +67,12 @@ def train(args):
     logger.addHandler(console_hander)
     for arg in vars(args):
         logger.info(f'{arg}: {getattr(args,arg)}')
-    # ------------------Log-----------------------#
 
 
+    #Data preparation
     preprocess_test = _transform_test(args.image_size)
+
+    #Intializing training and validation dataset
     Make_dataset = Makedataset(train_data_path = args.train_data_path , preprocess_test = preprocess_test, mode = "train_self", 
                                image_size = args.image_size)
 
@@ -90,10 +80,13 @@ def train(args):
                                image_size = args.image_size)
     
 
-    train_dataloader, train_obj_list = Make_dataset.make_dataset(name = args.dataset, batchsize=args.batch_size, product_list= None, shuf= True, args= args)
+    #training(image/category)
+    train_dataloader, train_obj_list = Make_dataset.make_dataset(name=args.dataset, product_list=None, batchsize=args.batch_size, args=args, k_shot=1, 
+                                                                 shuf=True)
+
     if args.dataset == "mvtec":
         val_dataset_name = "visa"
-        val_product_list  = ["chewinggum", "cashew", "pipe_fryum","capsules", "candle"] 
+        val_product_list  = ["chewinggum", "cashew", "pipe_fryum","capsules", "candle"]
     elif args.dataset == "visa":
         val_dataset_name = "mvtec"
         val_product_list  = ["bottle", "hazelnut","cable", "metal_nut" ,"leather", "pill"] 
@@ -103,6 +96,7 @@ def train(args):
     val_dataloader, val_obj_list = Make_dataset_val.make_dataset(name = val_dataset_name, product_list= val_product_list, batchsize = 1, shuf= False, args= args)
 
 
+    #Model Definition
     Mymodel = MyDictionary(model_configs, args).to(device)
     Mymodel.train()
 
@@ -110,7 +104,7 @@ def train(args):
     ema.register()
 
     optimizer = torch.optim.Adam(Mymodel.parameters(), lr = args.learning_rate, betas = (0.5 , 0.999)) 
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.8, patience=2, verbose=True)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.8, patience=2)
 
     if args.resume_path is not None:
         resume_path = args.resume_path
@@ -122,7 +116,7 @@ def train(args):
 
     loss_cross = nn.CrossEntropyLoss()
     
-    # text prompt
+    #text prompt
     with torch.no_grad():
         text_prompts = encode_text_with_prompt_ensemble(model_CLIP, train_obj_list, tokenizer, device)
     
@@ -130,7 +124,7 @@ def train(args):
     flag = True
     for epoch in range(args.epoch):
         current_lr = optimizer.param_groups[0]['lr']
-        logger.info(f"Epoch {epoch}, Learning Rate: {current_lr}")
+        #logger.info(f"Epoch {epoch}, Learning Rate: {current_lr}")
         
         loss_CQC_list = []
         loss_TAC_query_list = []
@@ -155,7 +149,7 @@ def train(args):
                 text_features = []
                 for cls in cls_name:
                     text_features.append(text_prompts[cls])
-                text_features = torch.stack(text_features, dim=0)
+                text_features = torch.stack(text_features, dim=0)    #We retained the OpenCLIP interface to enable DictAS to support a broader range of backbones.
 
             patch_good_tokens = [norm_patch(patch_good_token, True) for patch_good_token in patch_good_tokens]
             patch_ano_tokens = [norm_patch(patch_ano_token, True) for patch_ano_token in patch_ano_tokens]
@@ -203,17 +197,20 @@ def train(args):
             loss_TAC_query_list.append(loss_query_reg.item())
             loss_TAC_Retrived_list.append(loss_Retrived_reg.item())
             loss_CQC_list.append(loss_CQC.item())
-            print(loss_query.item(), loss_query_reg.item(), loss_Retrived_reg.item(), loss_CQC.item())
+            #print(loss_query.item(), loss_query_reg.item(), loss_Retrived_reg.item(), loss_CQC.item())
         scheduler.step(np.mean(loss_query_list))
         
         if (epoch + 1) % args.print_freq == 0:
             ap_raw = evaluate_epoch(val_dataloader, model_CLIP, Mymodel, device, args, val_obj_list)
             logger.info('epoch [{}/{}], loss_query:{:.4f} loss_TAC_query:{:.4f}  loss_TAC_Retrived:{:.4f} loss_CQC:{:.4f}  ap:{:.4f}'.format(epoch + 1, args.epoch, np.mean(loss_query_list), 
-                                                                                                                                             np.mean(loss_TAC_query_list), np.mean(loss_TAC_Retrived_list), np.mean(loss_CQC_list), ap_raw))
+                                                                                                                                           np.mean(loss_TAC_query_list), np.mean(loss_TAC_Retrived_list), np.mean(loss_CQC_list), ap_raw))
 
         if ap_raw > ap_max:
             ap_max = ap_raw
             ema.save_check()
+            ckp_path = os.path.join(save_path, 'epoch_' + str(epoch + 1) + '.pth')
+            save_dict = {'Mymodel': Mymodel.state_dict()}
+            torch.save(save_dict, ckp_path)
             logger.info("save best")
         else:
             logger.info("not save best")
@@ -235,10 +232,10 @@ def train(args):
             
 
         # save model
-        if (epoch + 1) % args.save_freq == 0:
-            ckp_path = os.path.join(save_path, 'epoch_' + str(epoch + 1) + '.pth')
-            save_dict = {'Mymodel': Mymodel.state_dict()}
-            torch.save(save_dict, ckp_path)
+        # if (epoch + 1) % args.save_freq == 0:
+        #     ckp_path = os.path.join(save_path, 'epoch_' + str(epoch + 1) + '.pth')
+        #     save_dict = {'Mymodel': Mymodel.state_dict()}
+        #     torch.save(save_dict, ckp_path)
             
 
 
@@ -247,13 +244,15 @@ if __name__ == '__main__':
 
     
     parser = argparse.ArgumentParser("DictAS", add_help=True)
-    # path
-    parser.add_argument("--train_data_path", type=str, default="./dataset/mvisa/data", help="path to auxiliary training dataset")
-    parser.add_argument("--anomaly_source_path", type=str, default="./datasets/DTD/images", help="Path to DTD dataset for anomaly synthesis")
+
+    #path
+    parser.add_argument("--train_data_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/dictas", help="path to auxiliary training dataset")
+    parser.add_argument("--anomaly_source_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/dictas/dtd/images", help="Path to DTD dataset for anomaly synthesis")
     parser.add_argument("--save_path", type=str, default='./exps/train_visa/222/vit_large_14_336', help='path to save checkpoint')
     parser.add_argument("--config_path", type=str, default='./open_clip_local/model_configs/ViT-L-14-336.json', help="model configs")
-    # model
-    parser.add_argument("--dataset", type=str, default='visa', help="train dataset name")  # mvtec, visa, MPDD, BTAD, mvtec3D, RESC, BrasTS, VOC, Ade
+
+    #model
+    parser.add_argument("--dataset", type=str, default='mvtec', help="train dataset name")  # mvtec, visa, MPDD, BTAD, mvtec3D, RESC, BrasTS, VOC, Ade
     parser.add_argument("--model", type=str, default="ViT-L-14-336", help="model used")
     parser.add_argument("--pretrained", type=str, default="openai", help="Source of pretrained weight")
     '''
@@ -262,13 +261,14 @@ if __name__ == '__main__':
     In our experiments, using layers 6, 12, 18, and 24 yields the best performance for most datasets, whereas a few datasets, 
     such as MVTec-AD, achieve better results when only layers 6 and 12 are selected during inference.
     '''
+
     parser.add_argument("--features_list", type=int, nargs="+", default=[6, 12, 18, 24], help="features used")
     parser.add_argument("--pretrained_path", type=str, default="./pretrained_weight/ViT-L-14-336px.pt", help="Original pretrained CLIP path")
     parser.add_argument("--resume_path", type=str, default= None, help="resume_path")
 
     parser.add_argument("--epoch", type=int, default=30, help="epochs")
     parser.add_argument("--learning_rate", type=float, default=0.0001, help="learning rate")
-    parser.add_argument("--batch_size", type=int, default= 24, help="batch size")
+    parser.add_argument("--batch_size", type=int, default= 8, help="batch size")
     parser.add_argument("--image_size", type=int, default=336, help="image size")
     parser.add_argument("--aug_rate", type=float, default=0.2, help="")
     parser.add_argument("--print_freq", type=int, default=1, help="print frequency")

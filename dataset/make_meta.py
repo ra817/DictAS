@@ -72,9 +72,10 @@ class metaSolver(object):
 
 if __name__ == '__main__':
     
-    dataset_list = ["mvtec", "visa", "MPDD", "BTAD", "RESC", "BrasTS", "mvtec3D", "Ade", "VOC"]
+    dataset_list = ["visa"]
 
 
     for dataset_name in dataset_list:
-        runner = metaSolver(root=f"./dataset/mvisa/data/{dataset_name}", meta_path=f"./dataset/mvisa/data/meta_{dataset_name}.json", datasets= dataset_name)  #new_anomaly_set
+        print(dataset_name)
+        runner = metaSolver(root=f"/SOLUTION/Defect_detection_pcb/dataset/dictas/{dataset_name}", meta_path=f"/SOLUTION/Defect_detection_pcb/dataset/dictas/meta_{dataset_name}.json", datasets= dataset_name)  #new_anomaly_set
         runner.run()

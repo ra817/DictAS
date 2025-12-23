@@ -38,7 +38,6 @@ def test(args):
     img_size = args.image_size
     dataset_dir = args.data_path
     save_path = args.save_path
-    dataset_name = args.dataset
     features_list = args.features_list
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -208,10 +207,10 @@ def move(path):
         os.makedirs(path)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("DictAS", add_help=True)
-    parser.add_argument("--data_path", type=str, default="./dataset/mvisa/data", help="path to test dataset")
+    parser.add_argument("--data_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/Demo/training_arch_4/arch_4_img_1.jpg", help="path to test dataset")
     parser.add_argument("--anomaly_source_path", type=str, default="./datasets/dtd/images", help="Path to DTD dataset for anomaly synthesis")
     parser.add_argument("--save_path", type=str, default='./results/test_mvtec/222/vit_large_14_336', help='path to save results')
-    parser.add_argument("--checkpoint_path", type=str, default="./DictAS_weight/train_visa.pth", help='path to checkpoint')
+    parser.add_argument("--checkpoint_path", type=str, default="./DictAS_weight/train_mvtec.pth", help='path to checkpoint')
     parser.add_argument("--config_path", type=str, default='./open_clip_local/model_configs/ViT-L-14-336.json', help="model configs")
     # model
 

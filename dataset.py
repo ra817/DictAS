@@ -14,21 +14,34 @@ import torchvision.transforms as transforms
 
 class Makedataset():
 	def __init__(self, train_data_path, preprocess_test, mode, image_size = 518):
+		"""
+			preprocess_test: applied to input image
+			target transform: applied to mask or ground truth of input image
+		"""
 		self.train_data_path= train_data_path
 		self.preprocess_test = preprocess_test
 		self.mode = mode
-		self.target_transform = transforms.Compose([transforms.Resize((image_size, image_size)),transforms.CenterCrop(image_size),transforms.ToTensor()])
+		self.target_transform = transforms.Compose(
+								[transforms.Resize((image_size, image_size)),
+								transforms.CenterCrop(image_size),
+								transforms.ToTensor()])
+		
 
 	def make_dataset(self, name, product_list, batchsize, args, k_shot = 1, shuf = True):
+		print(name, product_list, batchsize, k_shot, shuf)
+
+
 		dataset = MyDataset(root=self.train_data_path, transform=self.preprocess_test, target_transform=self.target_transform,
-											mode =self.mode , product_list= product_list, dataset = name, k_shot = k_shot, args = args)
+											mode=self.mode, product_list=product_list, dataset = name, k_shot = k_shot, args = args)
 		obj_list = dataset.get_cls_names()
-		
 		dataloader = torch.utils.data.DataLoader(dataset, batch_size = batchsize, shuffle = shuf)
-		
+
 		return dataloader, obj_list
 
+
+
 class MyDataset(data.Dataset):
+	#data.Dataset is pytorch base class used to define how a dataset provides samples to a model during training & inference
 	def __init__(self, root, transform, target_transform, mode='train_self', k_shot=0, dataset = None, args = None, product_list = None):
 		if mode == "val":
 			k_shot = 1
@@ -42,11 +55,12 @@ class MyDataset(data.Dataset):
 		self.dataset = dataset
 		self.args = args
 
-
+		#anomaly dataset(DTD: describable textures dataset)
 		anomaly_source_path = self.args.anomaly_source_path
-		self.anomaly_source_paths = sorted(glob.glob(anomaly_source_path+"/*/*.jpg"))
+		self.anomaly_source_paths = sorted(glob.glob(anomaly_source_path+"/*/*.jpg"))  #traversing through subdirs
 		self.resize_shape = (512,512)
 
+		#Applying transformation
 		img_trans_best = A.Compose([
 			A.RandomRotate90(p = 1),
 			A.Rotate(limit=[30, 270], p=1.0),
@@ -58,22 +72,25 @@ class MyDataset(data.Dataset):
 
 		self.img_trans_best = img_trans_best
 		
+		
+		#validation/testing dataset path
 		if os.path.exists(f"./fix_few_path/{dataset}/fix_{k_shot}-shot.txt"):
 			self.few_data_path = f"./fix_few_path/{dataset}/fix_{k_shot}-shot.txt"
+			print(self.few_data_path)
 		else:
 			self.few_data_path = None
 
+
+		#storing metadata(imgpath, class, anomaly) of each of category of the given dataset 
 		self.data_all = []
 
 		if  mode == "train_self":
 			meta_info = json.load(open(f'{self.root}/meta_{self.dataset}.json', 'r'))
 			self.cls_names = list(meta_info["train"].keys())
-			#self.cls_names = ["chewinggum"]
 			for cls_name in self.cls_names:
 				self.data_all.extend(meta_info["train"][cls_name])
-
-	
 		
+
 		elif mode == "val":
 			meta_info = json.load(open(f'{self.root}/meta_{self.dataset}.json', 'r'))
 			keys = meta_info["test"].keys()
@@ -85,10 +102,10 @@ class MyDataset(data.Dataset):
 					if key not in product_list:
 						del meta_info["test"][key]
 			self.cls_names = list(meta_info["test"].keys())
-			#self.cls_names = ["bottle"]
 			for cls_name in self.cls_names:
-				self.data_all.extend(meta_info["test"][cls_name])
-			
+				self.data_all.extend(meta_info["test"][cls_name])			
+
+
 		else:
 			meta_info = json.load(open(f'{self.root}/meta_{self.dataset}.json', 'r'))
 			self.cls_names = list(meta_info["test"].keys())
@@ -97,6 +114,7 @@ class MyDataset(data.Dataset):
 				self.data_all.extend(meta_info["test"][cls_name])
 			
 		self.length = len(self.data_all)
+
 
 		if not self.random_choose:
 			if self.use_unified_few and (self.mode == "test" or self.mode == "val"):
@@ -120,6 +138,10 @@ class MyDataset(data.Dataset):
                       ]
 
 		self.rot = iaa.Sequential([iaa.Affine(rotate=(-90, 90))])
+
+
+
+	#Applying augmentation
 	def augment_image(self, image, mask, anomaly_source_path):
 		
 		image = np.array(image, dtype= np.uint8)[:, :, ::-1]
@@ -177,6 +199,7 @@ class MyDataset(data.Dataset):
 			#return augmented_image, msk, np.array([has_anomaly],dtype=np.float32)
 			return augmented_image, msk, has_anomaly
 
+
 	def randAugmenter(self):
 		aug_ind = np.random.choice(np.arange(len(self.augmenters)), 3, replace=False)
 		aug = iaa.Sequential([self.augmenters[aug_ind[0]],
@@ -185,6 +208,8 @@ class MyDataset(data.Dataset):
 								)
 		return aug
 	
+
+
 	def load_fixed_normal(self):
 		few_dict = {}
 		for index, cls_name in enumerate(self.cls_names):
@@ -193,7 +218,7 @@ class MyDataset(data.Dataset):
 			for line in f:
 				if cls_name in line and cls_name != "fryum":
 					few_dict[cls_name].append(line.rstrip())
-					assert os.path.exists(os.path.join(self.root,line.rstrip()))
+					assert os.path.exists(os.path.join(self.root, line.rstrip()))
 				if cls_name == "fryum" and "fryum" in line and "pipe_fryum" not in line:
 					few_dict[cls_name].append(line.rstrip())
 					assert os.path.exists(os.path.join(self.root,line.rstrip()))

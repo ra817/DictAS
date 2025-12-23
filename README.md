@@ -329,3 +329,81 @@ We thank the great works [WinCLIP(zqhang)](https://github.com/zqhang/Accurate-Wi
 The code and dataset in this repository are licensed under the [MIT license](https://mit-license.org/).
 
 
+
+
+
+By Raghu:
+In image anomaly detection, we are not learning objects.
+we are learning how normal appearance of anything looks like.
+And anomalies flagged when anything breaks the expected visual pattern
+
+most of the industrial object that we are using for detecting anomalies 
+fabrics
+metal surfaces
+PCBs
+tiles
+leather
+wood
+wafers
+
+they have repetitive texture, patterns
+Anomaly is not a pattern, its a pattern violation
+
+the dataset present in the DTB: its a texture dataset used to cotnain information of patterns
+
+Why we are using synthetic anomaly instead of real anomaly images.
+
+Anomaly detection is fundamentally a comparision problem & attention based dictionaries is the most efficient way to compare
+
+
+Why to have seperate(qkv) for each of the generator(query, key and value)
+Backbone: generally answers about patch visual details.
+ViT is trained to: Ignore small local irregularities
+But anomaly detection needs: Detect small local irregularities
+So our generators: Re-focus attention
+Re-weight patch relations
+Make features more sensitive again
+
+
+
+
+
+Whole picture of Dictas(dictionary based model)
+We have a backbone(ViTs or CNNs), the feature map or embedding coming from any backbone, the variance is very high.
+Like it used to push visually similiar looking objects/stuffs closer in the embedding space and different one farer.
+So, it can directly used for recognition problem statement.
+But here we are dealing with anomlay detectin problem statement. So, anomaly detection fundamentally means where there is violation in respective structure or pattern of respective 
+object, then flag it.
+If any object contain only crack-crack all over its surface, then we cant say it anomaly directly to all the patches.
+We need to do matching of each patch with rest of the patch in an image to get an idea of what normal pattern majority of the patch is following then who are breaking that.
+those who are breaking actually that are anomlay.
+
+So, clean metal surface, scratch or dent metal surface used to fall or overlap in the embedding space because these backbone trained on billions of data points across millions of catgories
+used to neglect some subtle or small variation but in anomlay detection that our detection we need to pick that.
+Alone backbone feature map cant provide us those details.
+Like if you plot heatmap of one normal object and one anomlay object(small in size) of same kind then these two heatmap will almost looks same.
+So, if the variation is very much small then these backbone cant make it noticable its just negect these.
+
+What Solution these dict based model is giving to us?
+It generally uses some sort of generators(Query, Key & Values).
+What these are doing internally?
+These on higher level usually amplies the patches which are different compartively in an image so that keys and values which are storing only the normal samples cant able to make it or 
+indentify it.
+These generally uses self-attention mechanism.
+
+Process:
+Given an image: got the feature map(embedding of each patch) from respective backbone(ViTs or CNNs)
+now this feature map will pass through each Query, key and value generator.
+Following what is happening inside each of the generators.
+
+Query generators:
+So again there will be self-attention in between the feature map coming from the backbone.
+Now the attention will happen among the patch of respective image only. So, result of this attention will give us idea about which patch related to most of the patches or following same 
+patterns or structure & which are  highlighted to little bit different compartively.
+inside it we have query, key & value also which used to perform typical working of there.
+This generator will be trained with both normal and abnormal images. And training or learning make generator to transform raw feature(coming from backbone) in such a way that normal patches will be pushed each other and abnormal against each other via loss.
+Two losses are using here:
+first one Query alignment loss: this loss pushes those patches which are normal via ground truth but got little bit of variation in feature map.
+
+
+

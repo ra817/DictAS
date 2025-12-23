@@ -32,57 +32,57 @@ if __name__ == "__main__":
         {
             "name": "visa",   # https://amazon-visual-anomaly.s3.us-west-2.amazonaws.com/VisA_20220922.tar
             "class": Visa_dataset,
-            "src": "root to visa/visa",
-            "des": "./dataset/mvisa/data/visa"
-        },
-        {
-            "name": "mvtec",  # https://www.mvtec.com/company/research/datasets/mvtec-ad/downloads
-            "class": Mvtec_dataset,
-            "src": "root to MVTec-AD/MVtec_ad",
-            "des": "./dataset/mvisa/data/mvtec"
-        },
-        {
-            "name": "BTAD",  # Please download our DATA_Google.zip:  https://drive.google.com/file/d/1DDFIquy_rcfcgqIymYIY76kBTXmeLpOj/view?usp=drive_link
-            "class": BTAD_dataset,
-            "src": "root to BTAD/BTech_Dataset_transformed",
-            "des": "./dataset/mvisa/data/BTAD"
-        },
-        {
-            "name": "MPDD", # https://github.com/stepanje/MPDD
-            "class": MPDD_dataset,
-            "src": "root to MPDD/MPDD",
-            "des": "./dataset/mvisa/data/MPDD"
-        },
-        {
-            "name": "mvtec3D",   # https://www.mvtec.com/company/research/datasets/mvtec-3d-ad/downloads
-            "class": Mvtec3D_dataset,
-            "src": "root to mvtec3D/MVTec_3D",
-            "des": "./dataset/mvisa/data/mvtec3D"
-        },
-        {
-            "name": "RESC",   # Please download our DATA_Google.zip:  https://drive.google.com/file/d/1DDFIquy_rcfcgqIymYIY76kBTXmeLpOj/view?usp=drive_link
-            "class": RESC_dataset,
-            "src": "root to RESC/RESC",
-            "des": "./dataset/mvisa/data/RESC"
-        },
-        {
-            "name": "BrasTS",   # Please download our DATA_Google.zip:  https://drive.google.com/file/d/1DDFIquy_rcfcgqIymYIY76kBTXmeLpOj/view?usp=drive_link
-            "class": BrasTS_dataset,
-            "src": "root to BrasTS/BrasTS",
-            "des": "./dataset/mvisa/data/BrasTS"
-        },
-        {
-            "name": "Ade20K",   # Please download our DATA_Google.zip:  https://drive.google.com/file/d/1DDFIquy_rcfcgqIymYIY76kBTXmeLpOj/view?usp=drive_link
-            "class": Ade_dataset,
-            "src": "root to Ade20K/Ade",
-            "des": "./dataset/mvisa/data/Ade"
-        },
-        {
-            "name": "VOC",   # Please download our DATA_Google.zip:  https://drive.google.com/file/d/1DDFIquy_rcfcgqIymYIY76kBTXmeLpOj/view?usp=drive_link
-            "class": Ade_dataset,
-            "src": "root to VOC2012/VOC",
-            "des": "./dataset/mvisa/data/VOC"
-        },
+            "src": "/SOLUTION/Anomaly_detection_project/visa",
+            "des": "/SOLUTION/Defect_detection_pcb/dataset/dictas/visa"
+        }
+        # {
+        #     "name": "mvtec",  # https://www.mvtec.com/company/research/datasets/mvtec-ad/downloads
+        #     "class": Mvtec_dataset,
+        #     "src": "/SOLUTION/Anomaly_detection_project/dataset/MVTecAD",
+        #     "des": "/SOLUTION/Defect_detection_pcb/dataset/dictas"
+        # }
+        # {
+        #     "name": "BTAD",  # Please download our DATA_Google.zip:  https://drive.google.com/file/d/1DDFIquy_rcfcgqIymYIY76kBTXmeLpOj/view?usp=drive_link
+        #     "class": BTAD_dataset,
+        #     "src": "/SOLUTION/Anomaly_detection_project/dataset/BeanTech_AD",
+        #     "des": "/SOLUTION/Defect_detection_pcb/dataset/dictas/BTAD"
+        # },
+        # {
+        #     "name": "MPDD", # https://github.com/stepanje/MPDD
+        #     "class": MPDD_dataset,
+        #     "src": "/SOLUTION/Anomaly_detection_project/dataset/MPDD",
+        #     "des": "/SOLUTION/Defect_detection_pcb/dataset/dictas/MPDD"
+        # },
+        # {
+        #     "name": "mvtec3D",   # https://www.mvtec.com/company/research/datasets/mvtec-3d-ad/downloads
+        #     "class": Mvtec3D_dataset,
+        #     "src": "/SOLUTION/Anomaly_detection_project/dataset/mvtec3D",
+        #     "des": "/SOLUTION/Defect_detection_pcb/dataset/dictas/mvtec3D"
+        # },
+        # {
+        #     "name": "RESC",   # Please download our DATA_Google.zip:  https://drive.google.com/file/d/1DDFIquy_rcfcgqIymYIY76kBTXmeLpOj/view?usp=drive_link
+        #     "class": RESC_dataset,
+        #     "src": "/SOLUTION/Anomaly_detection_project/dataset/RESC",
+        #     "des": "/SOLUTION/Defect_detection_pcb/dataset/dictas/RESC"
+        # },
+        # {
+        #     "name": "BrasTS",   # Please download our DATA_Google.zip:  https://drive.google.com/file/d/1DDFIquy_rcfcgqIymYIY76kBTXmeLpOj/view?usp=drive_link
+        #     "class": BrasTS_dataset,
+        #     "src": "/SOLUTION/Anomaly_detection_project/dataset/BrasTS",
+        #     "des": "/SOLUTION/Defect_detection_pcb/dataset/dictas/BrasTS"
+        # },
+        # {
+        #     "name": "Ade20K",   # Please download our DATA_Google.zip:  https://drive.google.com/file/d/1DDFIquy_rcfcgqIymYIY76kBTXmeLpOj/view?usp=drive_link
+        #     "class": Ade_dataset,
+        #     "src": "/SOLUTION/Anomaly_detection_project/dataset/Ade",
+        #     "des": "/SOLUTION/Defect_detection_pcb/dataset/dictas/Ade"
+        # },
+        # {
+        #     "name": "VOC",   # Please download our DATA_Google.zip:  https://drive.google.com/file/d/1DDFIquy_rcfcgqIymYIY76kBTXmeLpOj/view?usp=drive_link
+        #     "class": Ade_dataset,
+        #     "src": "/SOLUTION/Anomaly_detection_project/dataset/VOC",
+        #     "des": "/SOLUTION/Defect_detection_pcb/dataset/dictas/VOC"
+        # },
 
     ]
 
