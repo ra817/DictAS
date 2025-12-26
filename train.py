@@ -1,32 +1,34 @@
 import os 
-import  json 
+import json 
+import logging 
 import argparse 
 import numpy as np 
-import os 
+from tqdm import tqdm
+
 import torch 
 from torch import Tensor, nn 
 from torch.nn import functional as F 
 import torchvision.transforms as transforms 
-import logging 
+
+import open_clip_local
 from models.model_CLIP import Load_CLIP, tokenize
 from collections import defaultdict
 from dataset import Makedataset
-from tqdm import tqdm
-from models.DictAS import MyDictionary
+
 from models.EMA import EMA
+from models.DictAS import MyDictionary
 from models.evaluate import evaluate_epoch
 from models.utils import norm_patch, setup_seed, _transform_test
 from models.prompt_ensemble import encode_text_with_prompt_ensemble
-import open_clip_local
 
 
 #Main training function
 def train(args):
 
-    #checking for device(cpu/gpu)
+    #Device(cpu/gpu)
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    #directory to save finetuned model
+    #Output directory
     save_path = args.save_path
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -80,7 +82,7 @@ def train(args):
                                image_size = args.image_size)
     
 
-    #training(image/category)
+    #train_DataLoader(image/category)
     train_dataloader, train_obj_list = Make_dataset.make_dataset(name=args.dataset, product_list=None, batchsize=args.batch_size, args=args, k_shot=1, 
                                                                  shuf=True)
 
@@ -113,7 +115,6 @@ def train(args):
         logger.info(f"loading checkpoint from {resume_path}")
     
 
-
     loss_cross = nn.CrossEntropyLoss()
     
     #text prompt
@@ -133,14 +134,15 @@ def train(args):
 
         idx = 0
         train_bar = tqdm(train_dataloader)
+
         for items in train_bar:
             idx += 1
-            img_ano = items['img_ano'].to(device)   # Query Image or test image
-            img_good = items["img_good"].to(device) # K-shot normal support image
-            gt_ano = items['img_ano_mask'].squeeze().to(device)  # GT of Query Image
-            cls_name = items["cls_name"]   # Product name
+            img_ano = items['img_ano'].to(device)   #Query Image or test image
+            img_good = items["img_good"].to(device) #K-shot normal support image
+            gt_ano = items['img_ano_mask'].squeeze().to(device)  #GT of Query Image
+            cls_name = items["cls_name"]   #Product name
             gt_ano[gt_ano > 0.5], gt_ano[gt_ano< 0.5] = 1, 0
-            anomaly = items['anomaly'].long().to(device)  # 0: normal, 1: anomaly
+            anomaly = items['anomaly'].long().to(device)  #0: normal, 1: anomaly
             gt_good = items['img_good_mask'].squeeze().to(device)
             gt_good[gt_good > 0.5], gt_good[gt_good< 0.5] = 1, 0
             with torch.no_grad():
@@ -248,11 +250,11 @@ if __name__ == '__main__':
     #path
     parser.add_argument("--train_data_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/dictas", help="path to auxiliary training dataset")
     parser.add_argument("--anomaly_source_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/dictas/dtd/images", help="Path to DTD dataset for anomaly synthesis")
-    parser.add_argument("--save_path", type=str, default='./exps/train_visa/222/vit_large_14_336', help='path to save checkpoint')
+    parser.add_argument("--save_path", type=str, default='./exps/train_visa', help='path to save checkpoint')
     parser.add_argument("--config_path", type=str, default='./open_clip_local/model_configs/ViT-L-14-336.json', help="model configs")
 
     #model
-    parser.add_argument("--dataset", type=str, default='mvtec', help="train dataset name")  # mvtec, visa, MPDD, BTAD, mvtec3D, RESC, BrasTS, VOC, Ade
+    parser.add_argument("--dataset", type=str, default='visa', help="train dataset name")  # mvtec, visa, MPDD, BTAD, mvtec3D, RESC, BrasTS, VOC, Ade
     parser.add_argument("--model", type=str, default="ViT-L-14-336", help="model used")
     parser.add_argument("--pretrained", type=str, default="openai", help="Source of pretrained weight")
     '''
@@ -266,7 +268,7 @@ if __name__ == '__main__':
     parser.add_argument("--pretrained_path", type=str, default="./pretrained_weight/ViT-L-14-336px.pt", help="Original pretrained CLIP path")
     parser.add_argument("--resume_path", type=str, default= None, help="resume_path")
 
-    parser.add_argument("--epoch", type=int, default=30, help="epochs")
+    parser.add_argument("--epoch", type=int, default=100, help="epochs")
     parser.add_argument("--learning_rate", type=float, default=0.0001, help="learning rate")
     parser.add_argument("--batch_size", type=int, default= 8, help="batch size")
     parser.add_argument("--image_size", type=int, default=336, help="image size")

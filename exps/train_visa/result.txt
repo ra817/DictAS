@@ -1,0 +1,80 @@
+25-12-25 21:35:14.405 - INFO: train_data_path: /SOLUTION/Defect_detection_pcb/dataset/dictas
+25-12-25 21:35:14.405 - INFO: anomaly_source_path: /SOLUTION/Defect_detection_pcb/dataset/dictas/dtd/images
+25-12-25 21:35:14.405 - INFO: save_path: ./exps/train_visa
+25-12-25 21:35:14.405 - INFO: config_path: ./open_clip_local/model_configs/ViT-L-14-336.json
+25-12-25 21:35:14.406 - INFO: dataset: visa
+25-12-25 21:35:14.406 - INFO: model: ViT-L-14-336
+25-12-25 21:35:14.406 - INFO: pretrained: openai
+25-12-25 21:35:14.406 - INFO: features_list: [6, 12, 18, 24]
+25-12-25 21:35:14.406 - INFO: pretrained_path: ./pretrained_weight/ViT-L-14-336px.pt
+25-12-25 21:35:14.406 - INFO: resume_path: None
+25-12-25 21:35:14.406 - INFO: epoch: 100
+25-12-25 21:35:14.406 - INFO: learning_rate: 0.0001
+25-12-25 21:35:14.406 - INFO: batch_size: 8
+25-12-25 21:35:14.406 - INFO: image_size: 336
+25-12-25 21:35:14.406 - INFO: aug_rate: 0.2
+25-12-25 21:35:14.406 - INFO: print_freq: 1
+25-12-25 21:35:14.406 - INFO: save_freq: 1
+25-12-25 21:35:14.406 - INFO: scale_list: [1, 3]
+25-12-25 21:35:14.406 - INFO: gen_anomaly_rate: 0.7
+25-12-25 21:35:14.406 - INFO: lambda1: 0.1
+25-12-25 21:35:14.406 - INFO: lambda2: 0.1
+25-12-25 21:35:14.406 - INFO: seed: 222
+25-12-25 21:35:14.406 - INFO: device_id: 0
+25-12-25 22:14:29.924 - INFO: epoch [1/100], loss_query:1.1456 loss_TAC_query:0.1578  loss_TAC_Retrived:0.0092 loss_CQC:0.0010  ap:0.6770
+25-12-25 22:14:30.029 - INFO: save best
+25-12-25 22:51:40.913 - INFO: epoch [2/100], loss_query:0.8942 loss_TAC_query:0.0418  loss_TAC_Retrived:0.0028 loss_CQC:0.0007  ap:0.6787
+25-12-25 22:51:41.027 - INFO: save best
+25-12-25 23:25:24.829 - INFO: epoch [3/100], loss_query:0.8104 loss_TAC_query:0.0258  loss_TAC_Retrived:0.0018 loss_CQC:0.0009  ap:0.6779
+25-12-25 23:25:24.829 - INFO: not save best
+25-12-25 23:25:24.829 - INFO: flag
+25-12-25 23:53:27.080 - INFO: epoch [4/100], loss_query:0.7716 loss_TAC_query:0.0278  loss_TAC_Retrived:0.0020 loss_CQC:0.0005  ap:0.6784
+25-12-25 23:53:27.080 - INFO: not save best
+25-12-26 00:20:00.510 - INFO: epoch [5/100], loss_query:0.7630 loss_TAC_query:0.0220  loss_TAC_Retrived:0.0012 loss_CQC:0.0003  ap:0.6782
+25-12-26 00:20:00.510 - INFO: not save best
+25-12-26 00:46:26.869 - INFO: epoch [6/100], loss_query:0.7554 loss_TAC_query:0.0161  loss_TAC_Retrived:0.0009 loss_CQC:0.0005  ap:0.6788
+25-12-26 00:46:26.965 - INFO: save best
+25-12-26 01:12:40.439 - INFO: epoch [7/100], loss_query:0.7530 loss_TAC_query:0.0182  loss_TAC_Retrived:0.0007 loss_CQC:0.0004  ap:0.6786
+25-12-26 01:12:40.440 - INFO: not save best
+25-12-26 01:40:21.474 - INFO: epoch [8/100], loss_query:0.7500 loss_TAC_query:0.0170  loss_TAC_Retrived:0.0012 loss_CQC:0.0005  ap:0.6777
+25-12-26 01:40:21.474 - INFO: not save best
+25-12-26 02:12:32.630 - INFO: epoch [9/100], loss_query:0.7498 loss_TAC_query:0.0139  loss_TAC_Retrived:0.0006 loss_CQC:0.0005  ap:0.6772
+25-12-26 02:12:32.645 - INFO: not save best
+25-12-26 02:48:29.378 - INFO: epoch [10/100], loss_query:0.7459 loss_TAC_query:0.0177  loss_TAC_Retrived:0.0006 loss_CQC:0.0003  ap:0.6770
+25-12-26 02:48:29.379 - INFO: not save best
+25-12-26 03:15:33.411 - INFO: epoch [11/100], loss_query:0.7437 loss_TAC_query:0.0142  loss_TAC_Retrived:0.0005 loss_CQC:0.0004  ap:0.6768
+25-12-26 03:15:33.411 - INFO: not save best
+25-12-26 03:41:33.860 - INFO: epoch [12/100], loss_query:0.7441 loss_TAC_query:0.0165  loss_TAC_Retrived:0.0006 loss_CQC:0.0009  ap:0.6762
+25-12-26 03:41:33.860 - INFO: not save best
+25-12-26 04:07:42.349 - INFO: epoch [13/100], loss_query:0.7436 loss_TAC_query:0.0122  loss_TAC_Retrived:0.0004 loss_CQC:0.0006  ap:0.6772
+25-12-26 04:07:42.349 - INFO: not save best
+25-12-26 04:33:42.270 - INFO: epoch [14/100], loss_query:0.7410 loss_TAC_query:0.0168  loss_TAC_Retrived:0.0006 loss_CQC:0.0005  ap:0.6755
+25-12-26 04:33:42.270 - INFO: not save best
+25-12-26 04:59:39.077 - INFO: epoch [15/100], loss_query:0.7388 loss_TAC_query:0.0115  loss_TAC_Retrived:0.0004 loss_CQC:0.0004  ap:0.6755
+25-12-26 04:59:39.077 - INFO: not save best
+25-12-26 05:25:41.188 - INFO: epoch [16/100], loss_query:0.7397 loss_TAC_query:0.0166  loss_TAC_Retrived:0.0005 loss_CQC:0.0004  ap:0.6756
+25-12-26 05:25:41.188 - INFO: not save best
+25-12-26 05:51:36.942 - INFO: epoch [17/100], loss_query:0.7387 loss_TAC_query:0.0120  loss_TAC_Retrived:0.0004 loss_CQC:0.0002  ap:0.6759
+25-12-26 05:51:36.942 - INFO: not save best
+25-12-26 06:17:38.536 - INFO: epoch [18/100], loss_query:0.7391 loss_TAC_query:0.0125  loss_TAC_Retrived:0.0006 loss_CQC:0.0003  ap:0.6745
+25-12-26 06:17:38.536 - INFO: not save best
+25-12-26 06:43:32.612 - INFO: epoch [19/100], loss_query:0.7377 loss_TAC_query:0.0147  loss_TAC_Retrived:0.0004 loss_CQC:0.0003  ap:0.6756
+25-12-26 06:43:32.612 - INFO: not save best
+25-12-26 07:09:35.186 - INFO: epoch [20/100], loss_query:0.7423 loss_TAC_query:0.0126  loss_TAC_Retrived:0.0004 loss_CQC:0.0006  ap:0.6741
+25-12-26 07:09:35.186 - INFO: not save best
+25-12-26 07:35:24.731 - INFO: epoch [21/100], loss_query:0.7359 loss_TAC_query:0.0143  loss_TAC_Retrived:0.0007 loss_CQC:0.0005  ap:0.6754
+25-12-26 07:35:24.731 - INFO: not save best
+25-12-26 08:01:21.539 - INFO: epoch [22/100], loss_query:0.7371 loss_TAC_query:0.0069  loss_TAC_Retrived:0.0002 loss_CQC:0.0004  ap:0.6752
+25-12-26 08:01:21.539 - INFO: not save best
+25-12-26 08:27:09.375 - INFO: epoch [23/100], loss_query:0.7313 loss_TAC_query:0.0131  loss_TAC_Retrived:0.0004 loss_CQC:0.0002  ap:0.6758
+25-12-26 08:27:09.375 - INFO: not save best
+25-12-26 08:53:08.622 - INFO: epoch [24/100], loss_query:0.7382 loss_TAC_query:0.0143  loss_TAC_Retrived:0.0006 loss_CQC:0.0005  ap:0.6734
+25-12-26 08:53:08.622 - INFO: not save best
+25-12-26 09:19:02.537 - INFO: epoch [25/100], loss_query:0.7297 loss_TAC_query:0.0046  loss_TAC_Retrived:0.0001 loss_CQC:0.0004  ap:0.6732
+25-12-26 09:19:02.538 - INFO: not save best
+25-12-26 09:45:09.299 - INFO: epoch [26/100], loss_query:0.7334 loss_TAC_query:0.0186  loss_TAC_Retrived:0.0006 loss_CQC:0.0005  ap:0.6739
+25-12-26 09:45:09.300 - INFO: not save best
+25-12-26 10:11:08.608 - INFO: epoch [27/100], loss_query:0.7326 loss_TAC_query:0.0115  loss_TAC_Retrived:0.0004 loss_CQC:0.0004  ap:0.6725
+25-12-26 10:11:08.609 - INFO: not save best
+25-12-26 10:40:29.600 - INFO: epoch [28/100], loss_query:0.7325 loss_TAC_query:0.0077  loss_TAC_Retrived:0.0002 loss_CQC:0.0003  ap:0.6732
+25-12-26 10:40:29.614 - INFO: not save best

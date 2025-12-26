@@ -19,17 +19,16 @@ class Makedataset():
 			target transform: applied to mask or ground truth of input image
 		"""
 		self.train_data_path= train_data_path
-		self.preprocess_test = preprocess_test
+		self.preprocess_test = preprocess_test 
 		self.mode = mode
 		self.target_transform = transforms.Compose(
 								[transforms.Resize((image_size, image_size)),
 								transforms.CenterCrop(image_size),
 								transforms.ToTensor()])
 		
-
+	#DataLoaders(train/val) Initializer
 	def make_dataset(self, name, product_list, batchsize, args, k_shot = 1, shuf = True):
 		print(name, product_list, batchsize, k_shot, shuf)
-
 
 		dataset = MyDataset(root=self.train_data_path, transform=self.preprocess_test, target_transform=self.target_transform,
 											mode=self.mode, product_list=product_list, dataset = name, k_shot = k_shot, args = args)
@@ -40,8 +39,12 @@ class Makedataset():
 
 
 
+
 class MyDataset(data.Dataset):
-	#data.Dataset is pytorch base class used to define how a dataset provides samples to a model during training & inference
+	'''
+		data.Dataset is pytorch base class used to pass data points
+		to a model during training & inference
+	'''
 	def __init__(self, root, transform, target_transform, mode='train_self', k_shot=0, dataset = None, args = None, product_list = None):
 		if mode == "val":
 			k_shot = 1
@@ -57,10 +60,11 @@ class MyDataset(data.Dataset):
 
 		#anomaly dataset(DTD: describable textures dataset)
 		anomaly_source_path = self.args.anomaly_source_path
+		#stores path of the datasets 
 		self.anomaly_source_paths = sorted(glob.glob(anomaly_source_path+"/*/*.jpg"))  #traversing through subdirs
 		self.resize_shape = (512,512)
 
-		#Applying transformation
+		#Augmentation rules
 		img_trans_best = A.Compose([
 			A.RandomRotate90(p = 1),
 			A.Rotate(limit=[30, 270], p=1.0),
@@ -249,10 +253,10 @@ class MyDataset(data.Dataset):
 	def get_cls_names(self):
 		return self.cls_names
 
+	#helper function(augmentations)
 	def Trans_good(self, img , img_mask):
 		img_mask = np.array(img_mask)
-		img = np.array(img)[:, :, ::-1]
-		#augmentations = self.img_trans_good(mask=img_mask, image=img)
+		img = np.array(img)[:, :, ::-1]   #converting rgb to bgr
 		augmentations = self.img_trans_best(mask=img_mask, image=img)
 		img = augmentations["image"][:, :, ::-1]
 		img_mask = augmentations["mask"]
@@ -284,30 +288,32 @@ class MyDataset(data.Dataset):
 	def __getitem__(self, index):
 		data = self.data_all[index]
 		if self.mode == "train_self":
+
 			img_ano_path, mask_ano_path, cls_name, specie_name, anomaly = data['img_path'], data['mask_path'], data['cls_name'], \
 																data['specie_name'], data['anomaly']
+			
 			img_ano = Image.open(os.path.join(self.root, img_ano_path)).convert("RGB")
 			if anomaly == 1: 
+				#mask should be either(black:0,white:255)
 				img_ano_mask = np.array(Image.open(os.path.join(self.root, mask_ano_path)).convert('L')) > 0
 				img_ano_mask = Image.fromarray(img_ano_mask.astype(np.uint8) * 255, mode='L')
 			else:
 				img_ano_mask = Image.fromarray(np.zeros((img_ano.size[1], img_ano.size[0])), mode='L')
 
-		
 			img_ano = img_ano.resize((1024, 1024), Image.BICUBIC)
 			img_ano_mask = img_ano_mask.resize((1024, 1024), Image.NEAREST)
 
-			
+			#90% of the time train with augmented data
 			is_trans = torch.rand(1).numpy()[0] 
-			if is_trans > 0.1:    # 0.2
+			if is_trans > 0.1:    
 				img_good, img_good_mask = self.Trans_good(img_ano, img_ano_mask)
 			else:
 				img_good, img_good_mask  = img_ano, img_ano_mask
 
-
+			#30% of time train with synthetic anomaly data 
 			is_gen = torch.rand(1).numpy()[0]
-
-			if is_gen > self.args.gen_anomaly_rate:   # 0.7
+			if is_gen > self.args.gen_anomaly_rate:   
+				#randomly picking image sythetic anomaly creation
 				anomaly_source_idx = torch.randint(0, len(self.anomaly_source_paths), (1,)).item()
 				img_ano, img_ano_mask, anomaly = self.augment_image(img_ano, img_ano_mask, self.anomaly_source_paths[anomaly_source_idx])
 			img_ano = self.transform(img_ano) if self.transform is not None else img_ano 
@@ -320,6 +326,8 @@ class MyDataset(data.Dataset):
 				img_good_mask) if self.target_transform is not None and img_good_mask is not None else img_good_mask
 			
 			return {'img_ano': img_ano, 'img_ano_mask': img_ano_mask, 'img_good': img_good, 'img_good_mask':img_good_mask, 'cls_name': cls_name,  "anomaly":anomaly}
+
+
 
 		elif self.mode == "test" or self.mode == "val":
 			img_ano_path, mask_ano_path, cls_name, specie_name, anomaly = data['img_path'], data['mask_path'], data['cls_name'], \

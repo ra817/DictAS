@@ -1,3 +1,32 @@
+'''
+script used to structure the given dataset from respective format to MVTec format.
+category_name/
+├── train/
+│   └── good/
+│       ├── 000.png
+│       ├── 001.png
+│       └── ...
+├── test/
+│   ├── good/
+│   │   ├── 000.png
+│   │   └── ...
+│   ├── defect_type_1/
+│   │   ├── 000.png
+│   │   └── ...
+│   ├── defect_type_2/
+│   │   └── ...
+│   └── ...
+└── ground_truth/
+    ├── defect_type_1/
+    │   ├── 000_mask.png
+    │   └── ...
+    ├── defect_type_2/
+    │   └── ...
+    └── ...
+
+'''
+
+
 import numpy as np 
 import os 
 import shutil 

@@ -366,7 +366,7 @@ Make features more sensitive again
 
 
 
-
+### CORE DICTIONARY MODEL IMPLEMENTATION
 
 Whole picture of Dictas(dictionary based model)
 We have a backbone(ViTs or CNNs), the feature map or embedding coming from any backbone, the variance is very high.
@@ -405,5 +405,7 @@ This generator will be trained with both normal and abnormal images. And trainin
 Two losses are using here:
 first one Query alignment loss: this loss pushes those patches which are normal via ground truth but got little bit of variation in feature map.
 
+Key generators:
 
 
+26/12/25
