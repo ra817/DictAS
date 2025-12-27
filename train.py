@@ -48,7 +48,6 @@ def train(args):
     model_CLIP = model_CLIP.to(device)
     model_CLIP.train()
     
-
     #logging
     root_logger = logging.getLogger()
     for handler in root_logger.handlers[:]:
@@ -69,6 +68,7 @@ def train(args):
     logger.addHandler(console_hander)
     for arg in vars(args):
         logger.info(f'{arg}: {getattr(args,arg)}')
+
 
 
     #Data preparation

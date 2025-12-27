@@ -92,13 +92,13 @@ def test(args):
 
 
     # ----------------------------- Modify this for different query images ----------------------------- #
-    query_img_path = "./demo_example/cable/mvtec_bent_wire_000521.bmp"
-    query_mask_path = "./demo_example/cable/mvtec_bent_wire_000521.png"
+    query_img_path = "demo_example/pcb/pcb_0001_NG_QS_C1_20231028094158.jpg"
+    query_mask_path = "demo_example/pcb/pcb_0001_NG_QS_C1_20231028094158.png"
     # query_mask_path = None
-    support_path_list = ["./demo_example/cable/normal_support_images/mvtec_000368.bmp", 
-                         "./demo_example/cable/normal_support_images/mvtec_000380.bmp",
-                         "./demo_example/cable/normal_support_images/mvtec_000444.bmp",
-                         "./demo_example/cable/normal_support_images/mvtec_000491.bmp"]
+    support_path_list = ["demo_example/pcb/normal_image_support/pcb_0001_OK_C1_20231027155851.jpg", 
+                         "demo_example/pcb/normal_image_support/pcb_0002_OK_C1_20231027155917.jpg",
+                         "demo_example/pcb/normal_image_support/pcb_0003_OK_C1_20231027155930.jpg",
+                         "demo_example/pcb/normal_image_support/pcb_0004_OK_C1_20231027155941.jpg"]
 
 
     query_img = Image.open(query_img_path)
@@ -208,9 +208,9 @@ def move(path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("DictAS", add_help=True)
     parser.add_argument("--data_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/Demo/training_arch_4/arch_4_img_1.jpg", help="path to test dataset")
-    parser.add_argument("--anomaly_source_path", type=str, default="./SOLUTION/Defect_detection_pcb/dataset/dictas/dtd", help="Path to DTD dataset for anomaly synthesis")
-    parser.add_argument("--save_path", type=str, default='./results/test_mvtec/222/vit_large_14_336', help='path to save results')
-    parser.add_argument("--checkpoint_path", type=str, default="train_mvtec.pth", help='path to checkpoint')
+    parser.add_argument("--anomaly_source_path", type=str, default="./datasets/dtd/images", help="Path to DTD dataset for anomaly synthesis")
+    parser.add_argument("--save_path", type=str, default='./demo_example/pcb1', help='path to save results')
+    parser.add_argument("--checkpoint_path", type=str, default="./checkpoints/dict_weights/train_mvtec/train_mvtec.pth", help='path to checkpoint')
     parser.add_argument("--config_path", type=str, default='./open_clip_local/model_configs/ViT-L-14-336.json', help="model configs")
     # model
 

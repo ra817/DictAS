@@ -1,23 +1,106 @@
-25-12-27 12:06:37.959 - INFO: train_data_path: /SOLUTION/Defect_detection_pcb/dataset/dictas
-25-12-27 12:06:37.959 - INFO: anomaly_source_path: /SOLUTION/Defect_detection_pcb/dataset/dictas/dtd/images
-25-12-27 12:06:37.959 - INFO: save_path: ./checkpoints/dict_weights/train_mvtec
-25-12-27 12:06:37.959 - INFO: config_path: ./open_clip_local/model_configs/ViT-L-14-336.json
-25-12-27 12:06:37.959 - INFO: dataset: mvtec
-25-12-27 12:06:37.959 - INFO: model: ViT-L-14-336
-25-12-27 12:06:37.959 - INFO: pretrained: openai
-25-12-27 12:06:37.959 - INFO: features_list: [6, 12, 18, 24]
-25-12-27 12:06:37.960 - INFO: pretrained_path: ./pretrained_weight/ViT-L-14-336px.pt
-25-12-27 12:06:37.960 - INFO: resume_path: None
-25-12-27 12:06:37.960 - INFO: epoch: 150
-25-12-27 12:06:37.960 - INFO: learning_rate: 0.0001
-25-12-27 12:06:37.960 - INFO: batch_size: 8
-25-12-27 12:06:37.960 - INFO: image_size: 336
-25-12-27 12:06:37.960 - INFO: aug_rate: 0.2
-25-12-27 12:06:37.960 - INFO: print_freq: 1
-25-12-27 12:06:37.960 - INFO: save_freq: 1
-25-12-27 12:06:37.960 - INFO: scale_list: [1, 3]
-25-12-27 12:06:37.960 - INFO: gen_anomaly_rate: 0.7
-25-12-27 12:06:37.960 - INFO: lambda1: 0.1
-25-12-27 12:06:37.960 - INFO: lambda2: 0.1
-25-12-27 12:06:37.960 - INFO: seed: 222
-25-12-27 12:06:37.960 - INFO: device_id: 0
+25-12-27 14:44:09.154 - INFO: train_data_path: /SOLUTION/Defect_detection_pcb/dataset/dictas
+25-12-27 14:44:09.154 - INFO: anomaly_source_path: /SOLUTION/Defect_detection_pcb/dataset/dictas/dtd/images
+25-12-27 14:44:09.154 - INFO: save_path: ./checkpoints/dict_weights/train_mvtec
+25-12-27 14:44:09.154 - INFO: config_path: ./open_clip_local/model_configs/ViT-L-14-336.json
+25-12-27 14:44:09.154 - INFO: dataset: mvtec
+25-12-27 14:44:09.154 - INFO: model: ViT-L-14-336
+25-12-27 14:44:09.154 - INFO: pretrained: openai
+25-12-27 14:44:09.154 - INFO: features_list: [6, 12, 18, 24]
+25-12-27 14:44:09.154 - INFO: pretrained_path: ./pretrained_weight/ViT-L-14-336px.pt
+25-12-27 14:44:09.154 - INFO: resume_path: None
+25-12-27 14:44:09.154 - INFO: epoch: 150
+25-12-27 14:44:09.154 - INFO: learning_rate: 0.0001
+25-12-27 14:44:09.155 - INFO: batch_size: 8
+25-12-27 14:44:09.155 - INFO: image_size: 336
+25-12-27 14:44:09.155 - INFO: aug_rate: 0.2
+25-12-27 14:44:09.155 - INFO: print_freq: 1
+25-12-27 14:44:09.155 - INFO: save_freq: 1
+25-12-27 14:44:09.155 - INFO: scale_list: [1, 3]
+25-12-27 14:44:09.155 - INFO: gen_anomaly_rate: 0.7
+25-12-27 14:44:09.155 - INFO: lambda1: 0.1
+25-12-27 14:44:09.155 - INFO: lambda2: 0.1
+25-12-27 14:44:09.155 - INFO: seed: 222
+25-12-27 14:44:09.155 - INFO: device_id: 0
+25-12-27 14:55:49.084 - INFO: epoch [1/150], loss_query:1.4494 loss_TAC_query:0.2311  loss_TAC_Retrived:0.0188 loss_CQC:0.0003  ap:0.4306
+25-12-27 14:55:49.351 - INFO: save best
+25-12-27 15:07:11.089 - INFO: epoch [2/150], loss_query:1.0838 loss_TAC_query:0.1038  loss_TAC_Retrived:0.0102 loss_CQC:0.0004  ap:0.4321
+25-12-27 15:07:11.243 - INFO: save best
+25-12-27 15:18:32.194 - INFO: epoch [3/150], loss_query:0.9871 loss_TAC_query:0.0634  loss_TAC_Retrived:0.0058 loss_CQC:0.0001  ap:0.4317
+25-12-27 15:18:32.194 - INFO: not save best
+25-12-27 15:18:32.194 - INFO: flag
+25-12-27 15:29:37.235 - INFO: epoch [4/150], loss_query:0.9344 loss_TAC_query:0.0995  loss_TAC_Retrived:0.0122 loss_CQC:0.0002  ap:0.4290
+25-12-27 15:29:37.235 - INFO: not save best
+25-12-27 15:40:45.075 - INFO: epoch [5/150], loss_query:0.9209 loss_TAC_query:0.0530  loss_TAC_Retrived:0.0052 loss_CQC:0.0003  ap:0.4318
+25-12-27 15:40:45.075 - INFO: not save best
+25-12-27 15:51:47.980 - INFO: epoch [6/150], loss_query:0.9067 loss_TAC_query:0.0167  loss_TAC_Retrived:0.0027 loss_CQC:0.0001  ap:0.4283
+25-12-27 15:51:47.981 - INFO: not save best
+25-12-27 16:02:47.594 - INFO: epoch [7/150], loss_query:0.9030 loss_TAC_query:0.0128  loss_TAC_Retrived:0.0005 loss_CQC:0.0001  ap:0.4318
+25-12-27 16:02:47.594 - INFO: not save best
+25-12-27 16:13:53.509 - INFO: epoch [8/150], loss_query:0.8987 loss_TAC_query:0.0168  loss_TAC_Retrived:0.0007 loss_CQC:0.0005  ap:0.4310
+25-12-27 16:13:53.510 - INFO: not save best
+25-12-27 16:26:00.292 - INFO: epoch [9/150], loss_query:0.9061 loss_TAC_query:0.0133  loss_TAC_Retrived:0.0005 loss_CQC:0.0003  ap:0.4284
+25-12-27 16:26:00.292 - INFO: not save best
+25-12-27 16:37:18.077 - INFO: epoch [10/150], loss_query:0.8972 loss_TAC_query:0.0101  loss_TAC_Retrived:0.0004 loss_CQC:0.0002  ap:0.4303
+25-12-27 16:37:18.077 - INFO: not save best
+25-12-27 16:48:20.773 - INFO: epoch [11/150], loss_query:0.8970 loss_TAC_query:0.0120  loss_TAC_Retrived:0.0007 loss_CQC:0.0000  ap:0.4259
+25-12-27 16:48:20.773 - INFO: not save best
+25-12-27 16:59:20.624 - INFO: epoch [12/150], loss_query:0.8900 loss_TAC_query:0.0219  loss_TAC_Retrived:0.0016 loss_CQC:0.0003  ap:0.4270
+25-12-27 16:59:20.624 - INFO: not save best
+25-12-27 17:10:26.216 - INFO: epoch [13/150], loss_query:0.9004 loss_TAC_query:0.0165  loss_TAC_Retrived:0.0010 loss_CQC:0.0002  ap:0.4289
+25-12-27 17:10:26.216 - INFO: not save best
+25-12-27 17:21:33.046 - INFO: epoch [14/150], loss_query:0.8920 loss_TAC_query:0.0127  loss_TAC_Retrived:0.0005 loss_CQC:0.0006  ap:0.4236
+25-12-27 17:21:33.046 - INFO: not save best
+25-12-27 17:32:40.077 - INFO: epoch [15/150], loss_query:0.8876 loss_TAC_query:0.0130  loss_TAC_Retrived:0.0007 loss_CQC:0.0000  ap:0.4204
+25-12-27 17:32:40.077 - INFO: not save best
+25-12-27 17:43:39.936 - INFO: epoch [16/150], loss_query:0.8923 loss_TAC_query:0.0109  loss_TAC_Retrived:0.0004 loss_CQC:0.0002  ap:0.4209
+25-12-27 17:43:39.936 - INFO: not save best
+25-12-27 17:54:44.267 - INFO: epoch [17/150], loss_query:0.8999 loss_TAC_query:0.0085  loss_TAC_Retrived:0.0007 loss_CQC:0.0002  ap:0.4281
+25-12-27 17:54:44.267 - INFO: not save best
+25-12-27 18:05:48.787 - INFO: epoch [18/150], loss_query:0.8864 loss_TAC_query:0.0225  loss_TAC_Retrived:0.0010 loss_CQC:0.0001  ap:0.4272
+25-12-27 18:05:48.787 - INFO: not save best
+25-12-27 18:16:50.474 - INFO: epoch [19/150], loss_query:0.8819 loss_TAC_query:0.0126  loss_TAC_Retrived:0.0007 loss_CQC:0.0003  ap:0.4282
+25-12-27 18:16:50.474 - INFO: not save best
+25-12-27 18:27:53.579 - INFO: epoch [20/150], loss_query:0.8786 loss_TAC_query:0.0047  loss_TAC_Retrived:0.0003 loss_CQC:0.0002  ap:0.4274
+25-12-27 18:27:53.579 - INFO: not save best
+25-12-27 18:38:59.518 - INFO: epoch [21/150], loss_query:0.8828 loss_TAC_query:0.0092  loss_TAC_Retrived:0.0003 loss_CQC:0.0002  ap:0.4263
+25-12-27 18:38:59.518 - INFO: not save best
+25-12-27 18:49:59.626 - INFO: epoch [22/150], loss_query:0.8813 loss_TAC_query:0.0173  loss_TAC_Retrived:0.0006 loss_CQC:0.0003  ap:0.4182
+25-12-27 18:49:59.627 - INFO: not save best
+25-12-27 19:01:01.351 - INFO: epoch [23/150], loss_query:0.8787 loss_TAC_query:0.0082  loss_TAC_Retrived:0.0004 loss_CQC:0.0001  ap:0.4254
+25-12-27 19:01:01.351 - INFO: not save best
+25-12-27 19:12:04.351 - INFO: epoch [24/150], loss_query:0.8827 loss_TAC_query:0.0122  loss_TAC_Retrived:0.0006 loss_CQC:0.0000  ap:0.4182
+25-12-27 19:12:04.352 - INFO: not save best
+25-12-27 19:22:55.747 - INFO: epoch [25/150], loss_query:0.8734 loss_TAC_query:0.0082  loss_TAC_Retrived:0.0003 loss_CQC:0.0004  ap:0.4269
+25-12-27 19:22:55.747 - INFO: not save best
+25-12-27 19:33:53.049 - INFO: epoch [26/150], loss_query:0.8802 loss_TAC_query:0.0057  loss_TAC_Retrived:0.0002 loss_CQC:0.0000  ap:0.4240
+25-12-27 19:33:53.049 - INFO: not save best
+25-12-27 19:44:53.535 - INFO: epoch [27/150], loss_query:0.8789 loss_TAC_query:0.0050  loss_TAC_Retrived:0.0002 loss_CQC:0.0001  ap:0.4251
+25-12-27 19:44:53.535 - INFO: not save best
+25-12-27 19:55:52.028 - INFO: epoch [28/150], loss_query:0.8794 loss_TAC_query:0.0107  loss_TAC_Retrived:0.0003 loss_CQC:0.0004  ap:0.4256
+25-12-27 19:55:52.028 - INFO: not save best
+25-12-27 20:06:54.633 - INFO: epoch [29/150], loss_query:0.8764 loss_TAC_query:0.0063  loss_TAC_Retrived:0.0002 loss_CQC:0.0001  ap:0.4219
+25-12-27 20:06:54.634 - INFO: not save best
+25-12-27 20:18:00.473 - INFO: epoch [30/150], loss_query:0.8845 loss_TAC_query:0.0037  loss_TAC_Retrived:0.0015 loss_CQC:0.0001  ap:0.4282
+25-12-27 20:18:00.473 - INFO: not save best
+25-12-27 20:28:59.861 - INFO: epoch [31/150], loss_query:0.8733 loss_TAC_query:0.0014  loss_TAC_Retrived:0.0001 loss_CQC:0.0003  ap:0.4252
+25-12-27 20:28:59.861 - INFO: not save best
+25-12-27 20:40:03.602 - INFO: epoch [32/150], loss_query:0.8717 loss_TAC_query:0.0113  loss_TAC_Retrived:0.0001 loss_CQC:0.0012  ap:0.4277
+25-12-27 20:40:03.602 - INFO: not save best
+25-12-27 20:51:08.293 - INFO: epoch [33/150], loss_query:0.8808 loss_TAC_query:0.0111  loss_TAC_Retrived:0.0004 loss_CQC:0.0000  ap:0.4256
+25-12-27 20:51:08.293 - INFO: not save best
+25-12-27 21:02:10.133 - INFO: epoch [34/150], loss_query:0.8741 loss_TAC_query:0.0067  loss_TAC_Retrived:0.0002 loss_CQC:0.0002  ap:0.4268
+25-12-27 21:02:10.134 - INFO: not save best
+25-12-27 21:13:06.871 - INFO: epoch [35/150], loss_query:0.8730 loss_TAC_query:0.0045  loss_TAC_Retrived:0.0002 loss_CQC:0.0001  ap:0.4261
+25-12-27 21:13:06.871 - INFO: not save best
+25-12-27 21:24:08.452 - INFO: epoch [36/150], loss_query:0.8716 loss_TAC_query:0.0092  loss_TAC_Retrived:0.0001 loss_CQC:0.0001  ap:0.4269
+25-12-27 21:24:08.453 - INFO: not save best
+25-12-27 21:35:11.724 - INFO: epoch [37/150], loss_query:0.8780 loss_TAC_query:0.0089  loss_TAC_Retrived:0.0004 loss_CQC:0.0001  ap:0.4240
+25-12-27 21:35:11.725 - INFO: not save best
+25-12-27 21:46:13.641 - INFO: epoch [38/150], loss_query:0.8719 loss_TAC_query:0.0043  loss_TAC_Retrived:0.0001 loss_CQC:0.0002  ap:0.4256
+25-12-27 21:46:13.641 - INFO: not save best
+25-12-27 21:57:12.898 - INFO: epoch [39/150], loss_query:0.8665 loss_TAC_query:0.0112  loss_TAC_Retrived:0.0002 loss_CQC:0.0001  ap:0.4263
+25-12-27 21:57:12.898 - INFO: not save best
+25-12-27 22:08:13.399 - INFO: epoch [40/150], loss_query:0.8772 loss_TAC_query:0.0090  loss_TAC_Retrived:0.0002 loss_CQC:0.0005  ap:0.4277
+25-12-27 22:08:13.399 - INFO: not save best
+25-12-27 22:19:17.850 - INFO: epoch [41/150], loss_query:0.8753 loss_TAC_query:0.0079  loss_TAC_Retrived:0.0003 loss_CQC:0.0002  ap:0.4264
+25-12-27 22:19:17.850 - INFO: not save best
