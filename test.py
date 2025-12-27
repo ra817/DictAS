@@ -223,10 +223,10 @@ def move(path):
         os.makedirs(path)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("DictAS", add_help=True)
-    parser.add_argument("--data_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/Demo/training_arch_4", help="path to test dataset")
+    parser.add_argument("--data_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/dictas", help="path to test dataset")
     parser.add_argument("--anomaly_source_path", type=str, default="./datasets/DTD/images", help="Path to DTD dataset for anomaly synthesis")
     parser.add_argument("--save_path", type=str, default='./results/test_mvtec/222/vit_large_14_336', help='path to save results')
-    parser.add_argument("--checkpoint_path", type=str, default="./DictAS_weight/train_mvtec.pth", help='path to checkpoint')
+    parser.add_argument("--checkpoint_path", type=str, default="train_mvtec.pth", help='path to checkpoint')
     parser.add_argument("--config_path", type=str, default='./open_clip_local/model_configs/ViT-L-14-336.json', help="model configs")
     # model
     parser.add_argument("--dataset", type=str, default='mvtec', help="test dataset")  # mvtec, visa, MPDD, BTAD, mvtec3D, RESC, BrasTS
@@ -234,7 +234,7 @@ if __name__ == '__main__':
     parser.add_argument("--model", type=str, default="ViT-L-14-336", help="model used")
     parser.add_argument("--pretrained", type=str, default="openai", help="Source of pretrained weight")
     parser.add_argument("--features_list", type=int, nargs="+", default=[6, 12, 18, 24], help="features used")
-    parser.add_argument("--pretrained_path", type=str, default="./pretrained_weight/ViT-L-14-336px.pt", help="Original pretrained CLIP path")
+    parser.add_argument("--pretrained_path", type=str, default=".checkpoints/backbone_weights/clip/ViT-L-14-336px.pt", help="Original pretrained CLIP path")
 
     parser.add_argument('--TEST_For_BESTSEGMENTATION', type=lambda x: x.lower() == 'true',
                         default=True, choices=[True, False], help= "True for the best segmentation performance, and False for the best classification performance.")

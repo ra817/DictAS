@@ -250,11 +250,11 @@ if __name__ == '__main__':
     #path
     parser.add_argument("--train_data_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/dictas", help="path to auxiliary training dataset")
     parser.add_argument("--anomaly_source_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/dictas/dtd/images", help="Path to DTD dataset for anomaly synthesis")
-    parser.add_argument("--save_path", type=str, default='./exps/train_visa', help='path to save checkpoint')
+    parser.add_argument("--save_path", type=str, default='./checkpoints/dict_weights/train_mvtec', help='path to save checkpoint')
     parser.add_argument("--config_path", type=str, default='./open_clip_local/model_configs/ViT-L-14-336.json', help="model configs")
 
     #model
-    parser.add_argument("--dataset", type=str, default='visa', help="train dataset name")  # mvtec, visa, MPDD, BTAD, mvtec3D, RESC, BrasTS, VOC, Ade
+    parser.add_argument("--dataset", type=str, default='mvtec', help="train dataset name")  # mvtec, visa, MPDD, BTAD, mvtec3D, RESC, BrasTS, VOC, Ade
     parser.add_argument("--model", type=str, default="ViT-L-14-336", help="model used")
     parser.add_argument("--pretrained", type=str, default="openai", help="Source of pretrained weight")
     '''
@@ -268,7 +268,7 @@ if __name__ == '__main__':
     parser.add_argument("--pretrained_path", type=str, default="./pretrained_weight/ViT-L-14-336px.pt", help="Original pretrained CLIP path")
     parser.add_argument("--resume_path", type=str, default= None, help="resume_path")
 
-    parser.add_argument("--epoch", type=int, default=100, help="epochs")
+    parser.add_argument("--epoch", type=int, default=150, help="epochs")
     parser.add_argument("--learning_rate", type=float, default=0.0001, help="learning rate")
     parser.add_argument("--batch_size", type=int, default= 8, help="batch size")
     parser.add_argument("--image_size", type=int, default=336, help="image size")
