@@ -64,7 +64,7 @@ class MyDataset(data.Dataset):
 		self.anomaly_source_paths = sorted(glob.glob(anomaly_source_path+"/*/*.jpg"))  #traversing through subdirs
 		self.resize_shape = (512,512)
 
-		#Augmentation rules
+		#Augmentation(Geometrical transformation)
 		img_trans_best = A.Compose([
 			A.RandomRotate90(p = 1),
 			A.Rotate(limit=[30, 270], p=1.0),
@@ -73,8 +73,21 @@ class MyDataset(data.Dataset):
 			A.GridDropout(ratio=0.3, p=0.5),
 			A.CoarseDropout(max_holes=8, max_height=32, max_width=32, p=0.5),
 		], is_check_shapes=False)
-
 		self.img_trans_best = img_trans_best
+
+		#Appearance transformation(Strong)
+		self.augmenters = [iaa.GammaContrast((0.5,2.0),per_channel=True),
+				iaa.MultiplyAndAddToBrightness(mul=(0.8,1.2),add=(-30,30)),
+				iaa.pillike.EnhanceSharpness(),
+				iaa.AddToHueAndSaturation((-50,50),per_channel=True),
+				iaa.Solarize(0.5, threshold=(32,128)),
+				iaa.Posterize(),
+				iaa.Invert(),
+				iaa.pillike.Autocontrast(),
+				iaa.pillike.Equalize(),
+				iaa.Affine(rotate=(-45, 45))
+				]
+		self.rot = iaa.Sequential([iaa.Affine(rotate=(-90, 90))])
 		
 		
 		#validation/testing dataset path
@@ -129,20 +142,6 @@ class MyDataset(data.Dataset):
 		else:
 			self.few_data_list = self.choose_fixed_normal()
 
-		self.augmenters = [iaa.GammaContrast((0.5,2.0),per_channel=True),
-                      iaa.MultiplyAndAddToBrightness(mul=(0.8,1.2),add=(-30,30)),
-                      iaa.pillike.EnhanceSharpness(),
-                      iaa.AddToHueAndSaturation((-50,50),per_channel=True),
-                      iaa.Solarize(0.5, threshold=(32,128)),
-                      iaa.Posterize(),
-                      iaa.Invert(),
-                      iaa.pillike.Autocontrast(),
-                      iaa.pillike.Equalize(),
-                      iaa.Affine(rotate=(-45, 45))
-                      ]
-
-		self.rot = iaa.Sequential([iaa.Affine(rotate=(-90, 90))])
-
 
 
 	#Applying augmentation
@@ -175,8 +174,7 @@ class MyDataset(data.Dataset):
 
 		beta = torch.rand(1).numpy()[0] * 0.8
 
-		augmented_image = image * (1 - perlin_thr) + (1 - beta) * img_thr + beta * image * (
-			perlin_thr)
+		augmented_image = image * (1 - perlin_thr) + (1 - beta) * img_thr + beta * image * (perlin_thr)
 
 		no_anomaly = torch.rand(1).numpy()[0]
 		if no_anomaly > 1:
@@ -299,9 +297,9 @@ class MyDataset(data.Dataset):
 				img_ano_mask = Image.fromarray(img_ano_mask.astype(np.uint8) * 255, mode='L')
 			else:
 				img_ano_mask = Image.fromarray(np.zeros((img_ano.size[1], img_ano.size[0])), mode='L')
-
 			img_ano = img_ano.resize((1024, 1024), Image.BICUBIC)
 			img_ano_mask = img_ano_mask.resize((1024, 1024), Image.NEAREST)
+
 
 			#90% of the time train with augmented data
 			is_trans = torch.rand(1).numpy()[0] 
@@ -309,6 +307,7 @@ class MyDataset(data.Dataset):
 				img_good, img_good_mask = self.Trans_good(img_ano, img_ano_mask)
 			else:
 				img_good, img_good_mask  = img_ano, img_ano_mask
+
 
 			#30% of time train with synthetic anomaly data 
 			is_gen = torch.rand(1).numpy()[0]

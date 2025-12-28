@@ -11,15 +11,15 @@ from torch.nn import functional as F
 import torchvision.transforms as transforms 
 
 import open_clip_local
-from models.model_CLIP import Load_CLIP, tokenize
+from models.backbone.clip.model_CLIP import Load_CLIP, tokenize
 from collections import defaultdict
 from dataset import Makedataset
 
-from models.EMA import EMA
-from models.DictAS import MyDictionary
+from models.dictionary.EMA import EMA
+from models.dictionary.DictAS import MyDictionary
 from models.evaluate import evaluate_epoch
 from models.utils import norm_patch, setup_seed, _transform_test
-from models.prompt_ensemble import encode_text_with_prompt_ensemble
+from models.backbone.clip.prompt_ensemble import encode_text_with_prompt_ensemble
 
 
 #Main training function
@@ -43,9 +43,9 @@ def train(args):
         model_configs = json.load(f)
     
     #backbone loading
-    model_CLIP, _, _ = open_clip_local.create_model_and_transforms("hf-hub:laion/CLIP-ViT-L-14-DataComp.XL-s13B-b90K", img_size= args.image_size) 
-    tokenizer = open_clip_local.get_tokenizer("hf-hub:laion/CLIP-ViT-L-14-DataComp.XL-s13B-b90K")
-    model_CLIP = model_CLIP.to(device)
+    model_CLIP , _ , _ = Load_CLIP(args.image_size, args.pretrained_path, device=device) 
+    model_CLIP.to(device)
+    tokenizer = tokenize
     model_CLIP.train()
     
     #logging
@@ -251,10 +251,10 @@ if __name__ == '__main__':
     parser.add_argument("--train_data_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/dictas", help="path to auxiliary training dataset")
     parser.add_argument("--anomaly_source_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/dictas/dtd/images", help="Path to DTD dataset for anomaly synthesis")
     parser.add_argument("--save_path", type=str, default='./checkpoints/dict_weights/train_mvtec', help='path to save checkpoint')
-    parser.add_argument("--config_path", type=str, default='./open_clip_local/model_configs/ViT-L-14-336.json', help="model configs")
+    parser.add_argument("--config_path", type=str, default='checkpoints/backbone_weights/clip/model_configs/ViT-L-14-336.json', help="model configs")
 
     #model
-    parser.add_argument("--dataset", type=str, default='mvtec', help="train dataset name")  # mvtec, visa, MPDD, BTAD, mvtec3D, RESC, BrasTS, VOC, Ade
+    parser.add_argument("--dataset", type=str, default='visa', help="train dataset name")  # mvtec, visa, MPDD, BTAD, mvtec3D, RESC, BrasTS, VOC, Ade
     parser.add_argument("--model", type=str, default="ViT-L-14-336", help="model used")
     parser.add_argument("--pretrained", type=str, default="openai", help="Source of pretrained weight")
     '''
@@ -265,7 +265,7 @@ if __name__ == '__main__':
     '''
 
     parser.add_argument("--features_list", type=int, nargs="+", default=[6, 12, 18, 24], help="features used")
-    parser.add_argument("--pretrained_path", type=str, default="./pretrained_weight/ViT-L-14-336px.pt", help="Original pretrained CLIP path")
+    parser.add_argument("--pretrained_path", type=str, default="checkpoints/backbone_weights/clip/ViT-L-14-336px.pt", help="Original pretrained CLIP path")
     parser.add_argument("--resume_path", type=str, default= None, help="resume_path")
 
     parser.add_argument("--epoch", type=int, default=150, help="epochs")

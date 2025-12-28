@@ -7,11 +7,11 @@ import argparse
 import numpy as np
 import torch.nn.functional as F
 import torchvision.transforms as transforms
-from models.DictAS import MyDictionary
-from models.model_CLIP import Load_CLIP, tokenize
+from models.dictionary.DictAS import MyDictionary
+from models.backbone.clip.model_CLIP import Load_CLIP, tokenize
 from scipy.ndimage import gaussian_filter
 import copy
-from models.prompt_ensemble import encode_text_with_prompt_ensemble
+from models.backbone.clip.prompt_ensemble import encode_text_with_prompt_ensemble
 from models.metric_and_visualization import calcuate_metric_pixel
 from models.utils import norm_patch, setup_seed, normalize, apply_ad_scoremap, cal_iou
 from PIL import Image
@@ -31,6 +31,16 @@ def _transform_test(n_px):
         _convert_image_to_rgb,
         ToTensor(),
         Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711)),
+    ])
+
+
+#Load images from directory
+def load_support_images_from_dir(dir_path):
+    valid_exts = (".jpg", ".jpeg", ".png", ".bmp", ".tiff")
+    return sorted([
+        os.path.join(dir_path, f)
+        for f in os.listdir(dir_path)
+        if f.lower().endswith(valid_exts)
     ])
 
 
@@ -92,13 +102,19 @@ def test(args):
 
 
     # ----------------------------- Modify this for different query images ----------------------------- #
-    query_img_path = "demo_example/pcb/pcb_0001_NG_QS_C1_20231028094158.jpg"
-    query_mask_path = "demo_example/pcb/pcb_0001_NG_QS_C1_20231028094158.png"
+    # query_img_path = "/SOLUTION/Defect_detection_pcb/dataset/golden_board_metafloor/set_3/batch_20251204_144120/img_20251204_144343_076.png"
+    # query_mask_path = "demo_example/pcb/pcb_0001_NG_QS_C1_20231028094158.png"
+    # support_dir = "/SOLUTION/Defect_detection_pcb/dataset/golden_board_metafloor/set_3/batch_20251204_144120"
+    # support_path_list = load_support_images_from_dir(support_dir)
+
+    query_img_path = "./demo_example/cable/mvtec_bent_wire_000521.bmp"
+    query_mask_path = "./demo_example/cable/mvtec_bent_wire_000521.png"
     # query_mask_path = None
-    support_path_list = ["demo_example/pcb/normal_image_support/pcb_0001_OK_C1_20231027155851.jpg", 
-                         "demo_example/pcb/normal_image_support/pcb_0002_OK_C1_20231027155917.jpg",
-                         "demo_example/pcb/normal_image_support/pcb_0003_OK_C1_20231027155930.jpg",
-                         "demo_example/pcb/normal_image_support/pcb_0004_OK_C1_20231027155941.jpg"]
+    support_path_list = ["./demo_example/cable/normal_support_images/mvtec_000368.bmp", 
+                         "./demo_example/cable/normal_support_images/mvtec_000380.bmp",
+                         "./demo_example/cable/normal_support_images/mvtec_000444.bmp",
+                         "./demo_example/cable/normal_support_images/mvtec_000491.bmp"]
+
 
 
     query_img = Image.open(query_img_path)
@@ -210,7 +226,7 @@ if __name__ == '__main__':
     parser.add_argument("--data_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/Demo/training_arch_4/arch_4_img_1.jpg", help="path to test dataset")
     parser.add_argument("--anomaly_source_path", type=str, default="./datasets/dtd/images", help="Path to DTD dataset for anomaly synthesis")
     parser.add_argument("--save_path", type=str, default='./demo_example/pcb1', help='path to save results')
-    parser.add_argument("--checkpoint_path", type=str, default="./checkpoints/dict_weights/train_mvtec/train_mvtec.pth", help='path to checkpoint')
+    parser.add_argument("--checkpoint_path", type=str, default="checkpoints/dict_weights/train_visa/epoch_6.pth", help='path to checkpoint')
     parser.add_argument("--config_path", type=str, default='./open_clip_local/model_configs/ViT-L-14-336.json', help="model configs")
     # model
 
