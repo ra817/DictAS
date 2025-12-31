@@ -62,12 +62,12 @@ class Attn_Block(nn.Module):
         self.TwoLayerMLP = MLP(dim, 0.1)
 
     def forward(self, fea):
-        q =  k = v = self.norm1(fea)
+        q = k = v = self.norm1(fea)
         res = q.clone()        #saving for residual connection later
         B, N, C = q.shape 
         assert k.shape == v.shape 
         B, M, C = k.shape 
-        q = self.q_proj(q).reshape(B, N, self.num_heads, C // self.num_heads)
+        q = self.q_proj(q).reshape(B, N, self.num_heads, C // self.num_heads)  #(B,N,Heads,C//heads)
         k = self.k_proj(k).reshape(B, M, self.num_heads, C // self.num_heads)
         v = self.v_proj(v).reshape(B, M, self.num_heads, C // self.num_heads)
 
@@ -140,34 +140,46 @@ class MyDictionary(nn.Module):
 
 
     def Lookup(self, patch_feature_query,  patch_feature_support): 
-
+        """
+            patch_feature_query: normal or anomaly(synthetic)
+            patch_feature_support: normal(augmented)
+        """
         B, N, C = patch_feature_query.shape 
         B, M, C = patch_feature_support.shape 
 
-        # Dictionary Construction
+        #Dictionary Construction
         F_Q = self.Query_Generator(patch_feature_query).reshape(B, N, self.num_heads, C // self.num_heads)
         F_K = self.Key_Generator(patch_feature_support).reshape(B, M, self.num_heads, C // self.num_heads)
         F_V = self.Value_Generator(patch_feature_support).reshape(B, M, self.num_heads, C // self.num_heads)
 
-        # Dictionary Lookup
+        #Dictionary Lookup
         attn = torch.einsum('bnkc,bmkc->bknm', F_Q, F_K) * self.scale
         attn = self.SPM(attn, adim = -1)
         x = torch.einsum('bknm,bmkc->bnkc', attn, F_V).reshape(B, N, C) 
         return x
     
 
+    
     def forward(self, img_ano_features, img_good_features, mode = "train_self", gt_normal = None, gt_abnormal = None):
-        if mode == "train_self":   # Training mode
+        '''
+            img_ano_features: feature map of input image(normal or with anomaly)
+            gt_abnormal:      ground truth(binary mask)
+            img_good_features:feature map of input image(normal and augmented)
+            gt_normal:        ground truth
+        '''
+        if mode == "train_self":   #Training mode
             Retrived_list_ClS = []
             kernel_size_list = self.args.scale_list
             B, L, C = img_ano_features[0].shape
             B1, _, _ = img_good_features[0].shape
             H = int(np.sqrt(L))
+
             loss_CQC_all = 0
             loss_query_all = 0
             for i in range(len(img_ano_features)):
-                img_ano_feature = img_ano_features[i].permute(0, 2, 1).view(B,-1,H,H)
+                img_ano_feature = img_ano_features[i].permute(0, 2, 1).view(B,-1,H,H)    #(B,576,1024)->(B,1024,24,24)
                 img_good_feature = img_good_features[i].permute(0, 2, 1).view(B,-1,H,H)
+
                 for kernel_size in kernel_size_list:
                     if kernel_size !=1:
                         img_ano_feature_padding = self.Padding_same(img_ano_feature,  kernel_size=kernel_size)

@@ -1,0 +1,25 @@
+25-12-28 15:03:10.065 - INFO: data_path: /SOLUTION/Defect_detection_pcb/dataset/dictas
+25-12-28 15:03:10.065 - INFO: anomaly_source_path: ./datasets/DTD/images
+25-12-28 15:03:10.065 - INFO: save_path: results
+25-12-28 15:03:10.065 - INFO: checkpoint_path: ./checkpoints/dict_weights/train_mvtec/train_mvtec.pth
+25-12-28 15:03:10.065 - INFO: config_path: checkpoints/backbone_weights/clip/model_configs/ViT-L-14-336.json
+25-12-28 15:03:10.065 - INFO: dataset: BrasTS
+25-12-28 15:03:10.065 - INFO: image_size: 336
+25-12-28 15:03:10.065 - INFO: model: ViT-L-14-336
+25-12-28 15:03:10.065 - INFO: pretrained: openai
+25-12-28 15:03:10.065 - INFO: features_list: [6, 12, 18, 24]
+25-12-28 15:03:10.065 - INFO: pretrained_path: ./checkpoints/backbone_weights/clip/ViT-L-14-336px.pt
+25-12-28 15:03:10.065 - INFO: TEST_For_BESTSEGMENTATION: True
+25-12-28 15:03:10.065 - INFO: scale_list: [1, 3]
+25-12-28 15:03:10.065 - INFO: alpha: 0.5
+25-12-28 15:03:10.065 - INFO: sigm: 6
+25-12-28 15:03:10.065 - INFO: k_shot: 4
+25-12-28 15:03:10.065 - INFO: device_id: 0
+25-12-28 15:03:10.065 - INFO: seed: 222
+25-12-28 15:30:45.092 - INFO: 
+| objects   |   auroc_px |   aupro_px |   ap_px |   f1_px |   iou |   auroc_sp |   aupro_sp |   ap_sp |   f1_sp |   threshold |
+|:----------|-----------:|-----------:|--------:|--------:|------:|-----------:|-----------:|--------:|--------:|------------:|
+| brain     |      97.15 |       77.1 |   57.87 |   55.26 | 38.18 |      88.57 |          0 |   94.48 |   88.98 |       0.116 |
+| mean      |      97.15 |       77.1 |   57.87 |   55.26 | 38.18 |      88.57 |          0 |   94.48 |   88.98 |       0.116 |
+25-12-28 15:30:45.092 - INFO: 
+./checkpoints/dict_weights/train_mvtec/train_mvtec.pth

@@ -60,7 +60,6 @@ class MyDataset(data.Dataset):
 
 		#anomaly dataset(DTD: describable textures dataset)
 		anomaly_source_path = self.args.anomaly_source_path
-		#stores path of the datasets 
 		self.anomaly_source_paths = sorted(glob.glob(anomaly_source_path+"/*/*.jpg"))  #traversing through subdirs
 		self.resize_shape = (512,512)
 
@@ -289,7 +288,7 @@ class MyDataset(data.Dataset):
 
 			img_ano_path, mask_ano_path, cls_name, specie_name, anomaly = data['img_path'], data['mask_path'], data['cls_name'], \
 																data['specie_name'], data['anomaly']
-			
+			#Normal data
 			img_ano = Image.open(os.path.join(self.root, img_ano_path)).convert("RGB")
 			if anomaly == 1: 
 				#mask should be either(black:0,white:255)
@@ -300,7 +299,6 @@ class MyDataset(data.Dataset):
 			img_ano = img_ano.resize((1024, 1024), Image.BICUBIC)
 			img_ano_mask = img_ano_mask.resize((1024, 1024), Image.NEAREST)
 
-
 			#90% of the time train with augmented data
 			is_trans = torch.rand(1).numpy()[0] 
 			if is_trans > 0.1:    
@@ -308,8 +306,7 @@ class MyDataset(data.Dataset):
 			else:
 				img_good, img_good_mask  = img_ano, img_ano_mask
 
-
-			#30% of time train with synthetic anomaly data 
+			#n% of time train with synthetic anomaly data 
 			is_gen = torch.rand(1).numpy()[0]
 			if is_gen > self.args.gen_anomaly_rate:   
 				#randomly picking image sythetic anomaly creation

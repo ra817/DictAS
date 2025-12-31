@@ -18,7 +18,6 @@ import copy
 from models.backbone.clip.prompt_ensemble import encode_text_with_prompt_ensemble
 from models.metric_and_visualization import calcuate_metric_pixel, calcuate_metric_image
 from models.utils import norm_patch, setup_seed, normalize, apply_ad_scoremap, cal_iou, BESTSEGMENTATION
-import open_clip_local
 
 
 
@@ -214,27 +213,20 @@ def test(args):
     calcuate_metric_pixel(results, obj_list, logger, alpha = args.alpha , sigm = args.sigm, args = args)
 
 
-import shutil
-def move(path):
-    if os.path.exists(path):
-        shutil.rmtree(path)
-        os.makedirs(path)
-    else:
-        os.makedirs(path)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("DictAS", add_help=True)
     parser.add_argument("--data_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/dictas", help="path to test dataset")
     parser.add_argument("--anomaly_source_path", type=str, default="./datasets/DTD/images", help="Path to DTD dataset for anomaly synthesis")
-    parser.add_argument("--save_path", type=str, default='./results/test_mvtec/222/vit_large_14_336', help='path to save results')
-    parser.add_argument("--checkpoint_path", type=str, default="./checkpoints/dict_weights/train_mvtec/train_mvtec.pth", help='path to checkpoint')
-    parser.add_argument("--config_path", type=str, default='./open_clip_local/model_configs/ViT-L-14-336.json', help="model configs")
+    parser.add_argument("--save_path", type=str, default='results/V2', help='path to save results')
+    parser.add_argument("--checkpoint_path", type=str, default="checkpoints/dict_weights/clip_base/train_mvtec/epoch_5.pth", help='path to checkpoint')
+    parser.add_argument("--config_path", type=str, default='checkpoints/backbone_weights/clip/Vit-B-16.json', help="model configs")
     # model
     parser.add_argument("--dataset", type=str, default='mvtec', help="test dataset")  # mvtec, visa, MPDD, BTAD, mvtec3D, RESC, BrasTS
     parser.add_argument("--image_size", type=int, default= 336, help="image size")
     parser.add_argument("--model", type=str, default="ViT-L-14-336", help="model used")
     parser.add_argument("--pretrained", type=str, default="openai", help="Source of pretrained weight")
     parser.add_argument("--features_list", type=int, nargs="+", default=[6, 12, 18, 24], help="features used")
-    parser.add_argument("--pretrained_path", type=str, default="./checkpoints/backbone_weights/clip/ViT-L-14-336px.pt", help="Original pretrained CLIP path")
+    parser.add_argument("--pretrained_path", type=str, default="checkpoints/backbone_weights/clip/VIT_b_16_clip.pt", help="Original pretrained CLIP path")
 
     parser.add_argument('--TEST_For_BESTSEGMENTATION', type=lambda x: x.lower() == 'true',
                         default=True, choices=[True, False], help= "True for the best segmentation performance, and False for the best classification performance.")
@@ -251,6 +243,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
     torch.cuda.set_device(args.device_id)
 
-    move(args.save_path)
+    os.makedirs(args.save_path, exist_ok=True)
     setup_seed(args.seed)
     test(args)

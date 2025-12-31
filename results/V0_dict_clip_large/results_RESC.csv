@@ -1,0 +1,3 @@
+objects,auroc_px,aupro_px,ap_px,f1_px,iou,auroc_sp,aupro_sp,ap_sp,f1_sp,threshold
+retina,97.33,88.84,73.93,66.6,49.92,86.14,0,84.79,75.33,0.091
+mean,97.33,88.84,73.93,66.6,49.92,86.14,0.0,84.79,75.33,0.091

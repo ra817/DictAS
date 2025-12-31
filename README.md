@@ -409,3 +409,22 @@ Key generators:
 
 
 26/12/25
+perlin noise: its a way to create smooth random pattern.
+Instead of creating pure random or noisy pixel we are using perlin noise where noise are natual looking like nearby pixel have
+similiar values.
+its used to create fake anomalies that look realistic
+
+How does perline noise is created:
+perline noise is a noise function used to create noise or anomaly is an iamge which is not random but instead strcutured,
+continous.
+perline is generally used to create  natural variation in an image then by threholsing we defient the anomlies.
+
+29/12/25
+Image present on the disk of shape(H,W)
+when we are transforming the 
+
+squeeze(): it only works on tensors.
+squeeze() remove all the dimension of 1
+
+
+clip 

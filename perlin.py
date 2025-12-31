@@ -46,7 +46,9 @@ def generate_perlin_noise_2d(shape, res):
 def rand_perlin_2d_np(shape, res, fade=lambda t: 6 * t ** 5 - 15 * t ** 4 + 10 * t ** 3):
     delta = (res[0] / shape[0], res[1] / shape[1])
     d = (shape[0] // res[0], shape[1] // res[1])
-    grid = np.mgrid[0:res[0]:delta[0], 0:res[1]:delta[1]].transpose(1, 2, 0) % 1
+
+    #coordinate of each pixel(relative)
+    grid = np.mgrid[0:res[0]:delta[0], 0:res[1]:delta[1]].transpose(1, 2, 0) % 1  
 
     angles = 2 * math.pi * np.random.rand(res[0] + 1, res[1] + 1)
     gradients = np.stack((np.cos(angles), np.sin(angles)), axis=-1)
@@ -98,3 +100,8 @@ def rand_perlin_2d_octaves(shape, res, octaves=1, persistence=0.5):
         frequency *= 2
         amplitude *= persistence
     return noise
+
+
+
+if __name__ == "main":
+    rand_perlin_2d_np((512,512),(2,2))

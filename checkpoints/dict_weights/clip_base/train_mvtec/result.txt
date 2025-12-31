@@ -1,0 +1,224 @@
+25-12-29 21:25:53.636 - INFO: train_data_path: /SOLUTION/Defect_detection_pcb/dataset/dictas
+25-12-29 21:25:53.636 - INFO: anomaly_source_path: /SOLUTION/Defect_detection_pcb/dataset/dictas/dtd/images
+25-12-29 21:25:53.636 - INFO: save_path: checkpoints/dict_weights/train_mvtec_clip_base
+25-12-29 21:25:53.636 - INFO: config_path: checkpoints/backbone_weights/clip/Vit-B-16.json
+25-12-29 21:25:53.636 - INFO: dataset: mvtec
+25-12-29 21:25:53.636 - INFO: model: ViT-B-16
+25-12-29 21:25:53.636 - INFO: pretrained: openai
+25-12-29 21:25:53.637 - INFO: features_list: [2, 5, 7, 11]
+25-12-29 21:25:53.637 - INFO: pretrained_path: checkpoints/backbone_weights/clip/VIT_b_16_clip.pt
+25-12-29 21:25:53.637 - INFO: resume_path: None
+25-12-29 21:25:53.637 - INFO: epoch: 100
+25-12-29 21:25:53.637 - INFO: learning_rate: 0.0001
+25-12-29 21:25:53.637 - INFO: batch_size: 32
+25-12-29 21:25:53.637 - INFO: image_size: 224
+25-12-29 21:25:53.637 - INFO: aug_rate: 0.2
+25-12-29 21:25:53.637 - INFO: print_freq: 1
+25-12-29 21:25:53.637 - INFO: save_freq: 1
+25-12-29 21:25:53.637 - INFO: scale_list: [1, 3]
+25-12-29 21:25:53.637 - INFO: gen_anomaly_rate: 0.7
+25-12-29 21:25:53.637 - INFO: lambda1: 0.1
+25-12-29 21:25:53.637 - INFO: lambda2: 0.1
+25-12-29 21:25:53.637 - INFO: seed: 222
+25-12-29 21:25:53.637 - INFO: device_id: 0
+25-12-29 21:37:56.058 - INFO: epoch [1/100], loss_query:2.5311 loss_TAC_query:0.3710  loss_TAC_Retrived:0.0581 loss_CQC:0.0168  ap:0.3890
+25-12-29 21:37:56.103 - INFO: save best
+25-12-29 21:45:06.527 - INFO: epoch [2/100], loss_query:1.5391 loss_TAC_query:0.1122  loss_TAC_Retrived:0.0069 loss_CQC:0.0091  ap:0.4036
+25-12-29 21:45:06.576 - INFO: save best
+25-12-29 21:52:02.739 - INFO: epoch [3/100], loss_query:1.4118 loss_TAC_query:0.0782  loss_TAC_Retrived:0.0040 loss_CQC:0.0057  ap:0.4047
+25-12-29 21:52:02.785 - INFO: save best
+25-12-29 21:59:02.612 - INFO: epoch [4/100], loss_query:1.3411 loss_TAC_query:0.0775  loss_TAC_Retrived:0.0036 loss_CQC:0.0069  ap:0.4095
+25-12-29 21:59:02.662 - INFO: save best
+25-12-29 22:05:50.919 - INFO: epoch [5/100], loss_query:1.3120 loss_TAC_query:0.0850  loss_TAC_Retrived:0.0075 loss_CQC:0.0051  ap:0.4119
+25-12-29 22:05:50.972 - INFO: save best
+25-12-29 22:12:42.896 - INFO: epoch [6/100], loss_query:1.4030 loss_TAC_query:0.1162  loss_TAC_Retrived:0.0441 loss_CQC:0.0050  ap:0.4014
+25-12-29 22:12:42.896 - INFO: not save best
+25-12-29 22:12:42.896 - INFO: flag
+25-12-29 22:19:21.860 - INFO: epoch [7/100], loss_query:1.0370 loss_TAC_query:0.1050  loss_TAC_Retrived:0.0133 loss_CQC:0.0077  ap:0.4102
+25-12-29 22:19:21.861 - INFO: not save best
+25-12-29 22:26:03.568 - INFO: epoch [8/100], loss_query:1.0295 loss_TAC_query:0.0697  loss_TAC_Retrived:0.0057 loss_CQC:0.0043  ap:0.4091
+25-12-29 22:26:03.568 - INFO: not save best
+25-12-29 22:32:47.721 - INFO: epoch [9/100], loss_query:1.0261 loss_TAC_query:0.0805  loss_TAC_Retrived:0.0050 loss_CQC:0.0109  ap:0.4102
+25-12-29 22:32:47.722 - INFO: not save best
+25-12-29 22:39:39.944 - INFO: epoch [10/100], loss_query:1.0261 loss_TAC_query:0.0599  loss_TAC_Retrived:0.0029 loss_CQC:0.0065  ap:0.4084
+25-12-29 22:39:39.944 - INFO: not save best
+25-12-29 22:46:28.350 - INFO: epoch [11/100], loss_query:1.0278 loss_TAC_query:0.0604  loss_TAC_Retrived:0.0031 loss_CQC:0.0045  ap:0.4097
+25-12-29 22:46:28.350 - INFO: not save best
+25-12-29 22:53:10.189 - INFO: epoch [12/100], loss_query:1.0189 loss_TAC_query:0.0440  loss_TAC_Retrived:0.0021 loss_CQC:0.0055  ap:0.4086
+25-12-29 22:53:10.189 - INFO: not save best
+25-12-29 22:59:56.892 - INFO: epoch [13/100], loss_query:1.0260 loss_TAC_query:0.0602  loss_TAC_Retrived:0.0030 loss_CQC:0.0023  ap:0.4088
+25-12-29 22:59:56.892 - INFO: not save best
+25-12-29 23:06:39.654 - INFO: epoch [14/100], loss_query:1.0190 loss_TAC_query:0.0585  loss_TAC_Retrived:0.0031 loss_CQC:0.0033  ap:0.4082
+25-12-29 23:06:39.655 - INFO: not save best
+25-12-29 23:13:24.044 - INFO: epoch [15/100], loss_query:1.0128 loss_TAC_query:0.0359  loss_TAC_Retrived:0.0011 loss_CQC:0.0034  ap:0.4089
+25-12-29 23:13:24.044 - INFO: not save best
+25-12-29 23:20:10.856 - INFO: epoch [16/100], loss_query:1.0147 loss_TAC_query:0.0392  loss_TAC_Retrived:0.0023 loss_CQC:0.0026  ap:0.4096
+25-12-29 23:20:10.856 - INFO: not save best
+25-12-29 23:26:58.805 - INFO: epoch [17/100], loss_query:1.0195 loss_TAC_query:0.0373  loss_TAC_Retrived:0.0016 loss_CQC:0.0061  ap:0.4098
+25-12-29 23:26:58.806 - INFO: not save best
+25-12-29 23:33:43.272 - INFO: epoch [18/100], loss_query:1.0104 loss_TAC_query:0.0371  loss_TAC_Retrived:0.0023 loss_CQC:0.0042  ap:0.4099
+25-12-29 23:33:43.272 - INFO: not save best
+25-12-29 23:40:20.824 - INFO: epoch [19/100], loss_query:1.0104 loss_TAC_query:0.0299  loss_TAC_Retrived:0.0013 loss_CQC:0.0043  ap:0.4087
+25-12-29 23:40:20.824 - INFO: not save best
+25-12-29 23:47:00.523 - INFO: epoch [20/100], loss_query:1.0074 loss_TAC_query:0.0307  loss_TAC_Retrived:0.0011 loss_CQC:0.0039  ap:0.4070
+25-12-29 23:47:00.523 - INFO: not save best
+25-12-29 23:53:41.905 - INFO: epoch [21/100], loss_query:1.0153 loss_TAC_query:0.0285  loss_TAC_Retrived:0.0009 loss_CQC:0.0059  ap:0.4077
+25-12-29 23:53:41.905 - INFO: not save best
+25-12-30 00:00:18.696 - INFO: epoch [22/100], loss_query:1.0075 loss_TAC_query:0.0382  loss_TAC_Retrived:0.0014 loss_CQC:0.0065  ap:0.4083
+25-12-30 00:00:18.696 - INFO: not save best
+25-12-30 00:06:58.714 - INFO: epoch [23/100], loss_query:1.0054 loss_TAC_query:0.0281  loss_TAC_Retrived:0.0012 loss_CQC:0.0046  ap:0.4082
+25-12-30 00:06:58.714 - INFO: not save best
+25-12-30 00:13:38.554 - INFO: epoch [24/100], loss_query:1.0126 loss_TAC_query:0.0268  loss_TAC_Retrived:0.0017 loss_CQC:0.0054  ap:0.4016
+25-12-30 00:13:38.554 - INFO: not save best
+25-12-30 00:20:18.932 - INFO: epoch [25/100], loss_query:1.0726 loss_TAC_query:0.0183  loss_TAC_Retrived:0.0004 loss_CQC:0.0073  ap:0.4078
+25-12-30 00:20:18.932 - INFO: not save best
+25-12-30 00:27:00.533 - INFO: epoch [26/100], loss_query:1.0158 loss_TAC_query:0.0269  loss_TAC_Retrived:0.0011 loss_CQC:0.0103  ap:0.4049
+25-12-30 00:27:00.534 - INFO: not save best
+25-12-30 00:33:42.217 - INFO: epoch [27/100], loss_query:1.0163 loss_TAC_query:0.0163  loss_TAC_Retrived:0.0023 loss_CQC:0.0025  ap:0.4052
+25-12-30 00:33:42.218 - INFO: not save best
+25-12-30 00:40:28.699 - INFO: epoch [28/100], loss_query:1.0171 loss_TAC_query:0.0204  loss_TAC_Retrived:0.0005 loss_CQC:0.0034  ap:0.4062
+25-12-30 00:40:28.699 - INFO: not save best
+25-12-30 00:47:12.156 - INFO: epoch [29/100], loss_query:1.0066 loss_TAC_query:0.0215  loss_TAC_Retrived:0.0012 loss_CQC:0.0052  ap:0.4068
+25-12-30 00:47:12.157 - INFO: not save best
+25-12-30 00:53:58.079 - INFO: epoch [30/100], loss_query:1.0060 loss_TAC_query:0.0241  loss_TAC_Retrived:0.0007 loss_CQC:0.0032  ap:0.4076
+25-12-30 00:53:58.079 - INFO: not save best
+25-12-30 01:00:42.521 - INFO: epoch [31/100], loss_query:0.9953 loss_TAC_query:0.0185  loss_TAC_Retrived:0.0015 loss_CQC:0.0068  ap:0.4091
+25-12-30 01:00:42.522 - INFO: not save best
+25-12-30 01:07:28.230 - INFO: epoch [32/100], loss_query:1.0080 loss_TAC_query:0.0197  loss_TAC_Retrived:0.0018 loss_CQC:0.0061  ap:0.4067
+25-12-30 01:07:28.230 - INFO: not save best
+25-12-30 01:14:14.554 - INFO: epoch [33/100], loss_query:1.0094 loss_TAC_query:0.0170  loss_TAC_Retrived:0.0008 loss_CQC:0.0042  ap:0.4077
+25-12-30 01:14:14.555 - INFO: not save best
+25-12-30 01:20:58.132 - INFO: epoch [34/100], loss_query:1.0050 loss_TAC_query:0.0148  loss_TAC_Retrived:0.0006 loss_CQC:0.0036  ap:0.4084
+25-12-30 01:20:58.133 - INFO: not save best
+25-12-30 01:27:37.006 - INFO: epoch [35/100], loss_query:1.0075 loss_TAC_query:0.0192  loss_TAC_Retrived:0.0006 loss_CQC:0.0049  ap:0.4085
+25-12-30 01:27:37.007 - INFO: not save best
+25-12-30 01:34:13.894 - INFO: epoch [36/100], loss_query:0.9993 loss_TAC_query:0.0165  loss_TAC_Retrived:0.0005 loss_CQC:0.0025  ap:0.4086
+25-12-30 01:34:13.894 - INFO: not save best
+25-12-30 01:40:59.316 - INFO: epoch [37/100], loss_query:1.0086 loss_TAC_query:0.0212  loss_TAC_Retrived:0.0005 loss_CQC:0.0040  ap:0.4083
+25-12-30 01:40:59.316 - INFO: not save best
+25-12-30 01:47:40.752 - INFO: epoch [38/100], loss_query:1.0008 loss_TAC_query:0.0179  loss_TAC_Retrived:0.0006 loss_CQC:0.0054  ap:0.4084
+25-12-30 01:47:40.752 - INFO: not save best
+25-12-30 01:54:21.149 - INFO: epoch [39/100], loss_query:1.0053 loss_TAC_query:0.0086  loss_TAC_Retrived:0.0004 loss_CQC:0.0046  ap:0.4068
+25-12-30 01:54:21.150 - INFO: not save best
+25-12-30 02:00:58.848 - INFO: epoch [40/100], loss_query:0.9972 loss_TAC_query:0.0167  loss_TAC_Retrived:0.0007 loss_CQC:0.0051  ap:0.4066
+25-12-30 02:00:58.848 - INFO: not save best
+25-12-30 02:07:43.252 - INFO: epoch [41/100], loss_query:1.0054 loss_TAC_query:0.0153  loss_TAC_Retrived:0.0006 loss_CQC:0.0063  ap:0.4071
+25-12-30 02:07:43.252 - INFO: not save best
+25-12-30 02:14:22.765 - INFO: epoch [42/100], loss_query:0.9983 loss_TAC_query:0.0167  loss_TAC_Retrived:0.0011 loss_CQC:0.0055  ap:0.4051
+25-12-30 02:14:22.765 - INFO: not save best
+25-12-30 02:21:04.894 - INFO: epoch [43/100], loss_query:1.0064 loss_TAC_query:0.0102  loss_TAC_Retrived:0.0003 loss_CQC:0.0055  ap:0.4066
+25-12-30 02:21:04.894 - INFO: not save best
+25-12-30 02:27:47.236 - INFO: epoch [44/100], loss_query:1.0001 loss_TAC_query:0.0121  loss_TAC_Retrived:0.0005 loss_CQC:0.0051  ap:0.4062
+25-12-30 02:27:47.237 - INFO: not save best
+25-12-30 02:34:30.266 - INFO: epoch [45/100], loss_query:1.0048 loss_TAC_query:0.0085  loss_TAC_Retrived:0.0002 loss_CQC:0.0045  ap:0.4066
+25-12-30 02:34:30.267 - INFO: not save best
+25-12-30 02:41:08.114 - INFO: epoch [46/100], loss_query:0.9975 loss_TAC_query:0.0143  loss_TAC_Retrived:0.0006 loss_CQC:0.0023  ap:0.4053
+25-12-30 02:41:08.114 - INFO: not save best
+25-12-30 02:47:54.076 - INFO: epoch [47/100], loss_query:1.0001 loss_TAC_query:0.0278  loss_TAC_Retrived:0.0009 loss_CQC:0.0094  ap:0.4024
+25-12-30 02:47:54.077 - INFO: not save best
+25-12-30 02:54:33.431 - INFO: epoch [48/100], loss_query:1.0025 loss_TAC_query:0.0139  loss_TAC_Retrived:0.0004 loss_CQC:0.0063  ap:0.4039
+25-12-30 02:54:33.431 - INFO: not save best
+25-12-30 03:01:13.068 - INFO: epoch [49/100], loss_query:1.0043 loss_TAC_query:0.0183  loss_TAC_Retrived:0.0005 loss_CQC:0.0047  ap:0.4050
+25-12-30 03:01:13.069 - INFO: not save best
+25-12-30 03:07:56.178 - INFO: epoch [50/100], loss_query:0.9987 loss_TAC_query:0.0152  loss_TAC_Retrived:0.0004 loss_CQC:0.0042  ap:0.4053
+25-12-30 03:07:56.178 - INFO: not save best
+25-12-30 03:14:38.157 - INFO: epoch [51/100], loss_query:1.0006 loss_TAC_query:0.0170  loss_TAC_Retrived:0.0004 loss_CQC:0.0060  ap:0.4050
+25-12-30 03:14:38.157 - INFO: not save best
+25-12-30 03:21:20.873 - INFO: epoch [52/100], loss_query:0.9984 loss_TAC_query:0.0149  loss_TAC_Retrived:0.0003 loss_CQC:0.0050  ap:0.4054
+25-12-30 03:21:20.873 - INFO: not save best
+25-12-30 03:27:59.304 - INFO: epoch [53/100], loss_query:1.0050 loss_TAC_query:0.0144  loss_TAC_Retrived:0.0017 loss_CQC:0.0106  ap:0.4030
+25-12-30 03:27:59.304 - INFO: not save best
+25-12-30 03:34:37.745 - INFO: epoch [54/100], loss_query:1.0014 loss_TAC_query:0.0143  loss_TAC_Retrived:0.0004 loss_CQC:0.0035  ap:0.4042
+25-12-30 03:34:37.745 - INFO: not save best
+25-12-30 03:41:20.168 - INFO: epoch [55/100], loss_query:0.9977 loss_TAC_query:0.0202  loss_TAC_Retrived:0.0005 loss_CQC:0.0040  ap:0.4042
+25-12-30 03:41:20.169 - INFO: not save best
+25-12-30 03:48:00.819 - INFO: epoch [56/100], loss_query:1.0050 loss_TAC_query:0.0200  loss_TAC_Retrived:0.0007 loss_CQC:0.0054  ap:0.4043
+25-12-30 03:48:00.820 - INFO: not save best
+25-12-30 03:54:42.220 - INFO: epoch [57/100], loss_query:1.0069 loss_TAC_query:0.0146  loss_TAC_Retrived:0.0005 loss_CQC:0.0013  ap:0.4036
+25-12-30 03:54:42.221 - INFO: not save best
+25-12-30 04:01:19.423 - INFO: epoch [58/100], loss_query:0.9950 loss_TAC_query:0.0121  loss_TAC_Retrived:0.0003 loss_CQC:0.0083  ap:0.4042
+25-12-30 04:01:19.423 - INFO: not save best
+25-12-30 04:07:57.826 - INFO: epoch [59/100], loss_query:1.0083 loss_TAC_query:0.0202  loss_TAC_Retrived:0.0010 loss_CQC:0.0034  ap:0.3976
+25-12-30 04:07:57.827 - INFO: not save best
+25-12-30 04:14:36.374 - INFO: epoch [60/100], loss_query:1.0025 loss_TAC_query:0.0086  loss_TAC_Retrived:0.0003 loss_CQC:0.0018  ap:0.3994
+25-12-30 04:14:36.374 - INFO: not save best
+25-12-30 04:21:09.139 - INFO: epoch [61/100], loss_query:1.0012 loss_TAC_query:0.0096  loss_TAC_Retrived:0.0005 loss_CQC:0.0050  ap:0.4009
+25-12-30 04:21:09.139 - INFO: not save best
+25-12-30 04:27:43.437 - INFO: epoch [62/100], loss_query:0.9931 loss_TAC_query:0.0179  loss_TAC_Retrived:0.0007 loss_CQC:0.0054  ap:0.4003
+25-12-30 04:27:43.437 - INFO: not save best
+25-12-30 04:34:16.588 - INFO: epoch [63/100], loss_query:0.9948 loss_TAC_query:0.0092  loss_TAC_Retrived:0.0003 loss_CQC:0.0030  ap:0.4012
+25-12-30 04:34:16.588 - INFO: not save best
+25-12-30 04:40:53.624 - INFO: epoch [64/100], loss_query:0.9874 loss_TAC_query:0.0121  loss_TAC_Retrived:0.0005 loss_CQC:0.0061  ap:0.4012
+25-12-30 04:40:53.625 - INFO: not save best
+25-12-30 04:47:32.826 - INFO: epoch [65/100], loss_query:0.9960 loss_TAC_query:0.0109  loss_TAC_Retrived:0.0002 loss_CQC:0.0043  ap:0.4023
+25-12-30 04:47:32.826 - INFO: not save best
+25-12-30 04:54:13.848 - INFO: epoch [66/100], loss_query:1.0019 loss_TAC_query:0.0181  loss_TAC_Retrived:0.0004 loss_CQC:0.0042  ap:0.4021
+25-12-30 04:54:13.849 - INFO: not save best
+25-12-30 05:00:56.530 - INFO: epoch [67/100], loss_query:1.0000 loss_TAC_query:0.0193  loss_TAC_Retrived:0.0007 loss_CQC:0.0084  ap:0.4020
+25-12-30 05:00:56.530 - INFO: not save best
+25-12-30 05:07:39.655 - INFO: epoch [68/100], loss_query:1.0012 loss_TAC_query:0.0154  loss_TAC_Retrived:0.0003 loss_CQC:0.0043  ap:0.4023
+25-12-30 05:07:39.655 - INFO: not save best
+25-12-30 05:14:19.779 - INFO: epoch [69/100], loss_query:0.9949 loss_TAC_query:0.0118  loss_TAC_Retrived:0.0005 loss_CQC:0.0080  ap:0.4019
+25-12-30 05:14:19.779 - INFO: not save best
+25-12-30 05:20:59.922 - INFO: epoch [70/100], loss_query:1.0058 loss_TAC_query:0.0132  loss_TAC_Retrived:0.0017 loss_CQC:0.0060  ap:0.4020
+25-12-30 05:20:59.923 - INFO: not save best
+25-12-30 05:27:40.158 - INFO: epoch [71/100], loss_query:1.0013 loss_TAC_query:0.0127  loss_TAC_Retrived:0.0003 loss_CQC:0.0069  ap:0.4020
+25-12-30 05:27:40.158 - INFO: not save best
+25-12-30 05:34:19.823 - INFO: epoch [72/100], loss_query:1.0005 loss_TAC_query:0.0126  loss_TAC_Retrived:0.0003 loss_CQC:0.0049  ap:0.4021
+25-12-30 05:34:19.823 - INFO: not save best
+25-12-30 05:40:59.354 - INFO: epoch [73/100], loss_query:1.0010 loss_TAC_query:0.0104  loss_TAC_Retrived:0.0002 loss_CQC:0.0033  ap:0.4026
+25-12-30 05:40:59.354 - INFO: not save best
+25-12-30 05:47:40.922 - INFO: epoch [74/100], loss_query:0.9970 loss_TAC_query:0.0086  loss_TAC_Retrived:0.0004 loss_CQC:0.0025  ap:0.4024
+25-12-30 05:47:40.922 - INFO: not save best
+25-12-30 05:54:18.207 - INFO: epoch [75/100], loss_query:0.9962 loss_TAC_query:0.0133  loss_TAC_Retrived:0.0004 loss_CQC:0.0041  ap:0.4029
+25-12-30 05:54:18.208 - INFO: not save best
+25-12-30 06:01:00.973 - INFO: epoch [76/100], loss_query:1.0008 loss_TAC_query:0.0105  loss_TAC_Retrived:0.0005 loss_CQC:0.0048  ap:0.4025
+25-12-30 06:01:00.974 - INFO: not save best
+25-12-30 06:07:43.285 - INFO: epoch [77/100], loss_query:0.9866 loss_TAC_query:0.0069  loss_TAC_Retrived:0.0005 loss_CQC:0.0060  ap:0.4018
+25-12-30 06:07:43.285 - INFO: not save best
+25-12-30 06:14:26.358 - INFO: epoch [78/100], loss_query:1.0036 loss_TAC_query:0.0105  loss_TAC_Retrived:0.0002 loss_CQC:0.0018  ap:0.4029
+25-12-30 06:14:26.358 - INFO: not save best
+25-12-30 06:21:10.015 - INFO: epoch [79/100], loss_query:1.0077 loss_TAC_query:0.0103  loss_TAC_Retrived:0.0004 loss_CQC:0.0043  ap:0.4028
+25-12-30 06:21:10.016 - INFO: not save best
+25-12-30 06:27:47.695 - INFO: epoch [80/100], loss_query:0.9948 loss_TAC_query:0.0144  loss_TAC_Retrived:0.0005 loss_CQC:0.0060  ap:0.4029
+25-12-30 06:27:47.695 - INFO: not save best
+25-12-30 06:34:28.106 - INFO: epoch [81/100], loss_query:1.0017 loss_TAC_query:0.0118  loss_TAC_Retrived:0.0003 loss_CQC:0.0055  ap:0.4031
+25-12-30 06:34:28.107 - INFO: not save best
+25-12-30 06:41:08.447 - INFO: epoch [82/100], loss_query:0.9971 loss_TAC_query:0.0154  loss_TAC_Retrived:0.0004 loss_CQC:0.0027  ap:0.4034
+25-12-30 06:41:08.447 - INFO: not save best
+25-12-30 06:47:50.267 - INFO: epoch [83/100], loss_query:0.9933 loss_TAC_query:0.0187  loss_TAC_Retrived:0.0004 loss_CQC:0.0099  ap:0.4036
+25-12-30 06:47:50.267 - INFO: not save best
+25-12-30 06:54:31.558 - INFO: epoch [84/100], loss_query:0.9925 loss_TAC_query:0.0119  loss_TAC_Retrived:0.0004 loss_CQC:0.0043  ap:0.4032
+25-12-30 06:54:31.558 - INFO: not save best
+25-12-30 07:01:12.939 - INFO: epoch [85/100], loss_query:0.9991 loss_TAC_query:0.0132  loss_TAC_Retrived:0.0006 loss_CQC:0.0022  ap:0.4031
+25-12-30 07:01:12.939 - INFO: not save best
+25-12-30 07:07:52.067 - INFO: epoch [86/100], loss_query:1.0027 loss_TAC_query:0.0093  loss_TAC_Retrived:0.0003 loss_CQC:0.0048  ap:0.4032
+25-12-30 07:07:52.068 - INFO: not save best
+25-12-30 07:14:34.633 - INFO: epoch [87/100], loss_query:0.9925 loss_TAC_query:0.0199  loss_TAC_Retrived:0.0012 loss_CQC:0.0039  ap:0.4032
+25-12-30 07:14:34.633 - INFO: not save best
+25-12-30 07:21:12.592 - INFO: epoch [88/100], loss_query:0.9909 loss_TAC_query:0.0149  loss_TAC_Retrived:0.0003 loss_CQC:0.0049  ap:0.4033
+25-12-30 07:21:12.592 - INFO: not save best
+25-12-30 07:27:54.117 - INFO: epoch [89/100], loss_query:0.9981 loss_TAC_query:0.0135  loss_TAC_Retrived:0.0003 loss_CQC:0.0043  ap:0.4033
+25-12-30 07:27:54.117 - INFO: not save best
+25-12-30 07:34:37.726 - INFO: epoch [90/100], loss_query:0.9968 loss_TAC_query:0.0104  loss_TAC_Retrived:0.0004 loss_CQC:0.0036  ap:0.4034
+25-12-30 07:34:37.726 - INFO: not save best
+25-12-30 07:41:19.327 - INFO: epoch [91/100], loss_query:1.0099 loss_TAC_query:0.0146  loss_TAC_Retrived:0.0003 loss_CQC:0.0040  ap:0.4032
+25-12-30 07:41:19.328 - INFO: not save best
+25-12-30 07:47:57.994 - INFO: epoch [92/100], loss_query:0.9978 loss_TAC_query:0.0103  loss_TAC_Retrived:0.0004 loss_CQC:0.0024  ap:0.4031
+25-12-30 07:47:57.994 - INFO: not save best
+25-12-30 07:54:43.762 - INFO: epoch [93/100], loss_query:0.9938 loss_TAC_query:0.0229  loss_TAC_Retrived:0.0003 loss_CQC:0.0076  ap:0.4032
+25-12-30 07:54:43.763 - INFO: not save best
+25-12-30 08:01:25.138 - INFO: epoch [94/100], loss_query:0.9989 loss_TAC_query:0.0079  loss_TAC_Retrived:0.0004 loss_CQC:0.0035  ap:0.4032
+25-12-30 08:01:25.139 - INFO: not save best
+25-12-30 08:08:05.603 - INFO: epoch [95/100], loss_query:0.9998 loss_TAC_query:0.0094  loss_TAC_Retrived:0.0003 loss_CQC:0.0020  ap:0.4032
+25-12-30 08:08:05.603 - INFO: not save best
+25-12-30 08:14:44.538 - INFO: epoch [96/100], loss_query:0.9945 loss_TAC_query:0.0105  loss_TAC_Retrived:0.0007 loss_CQC:0.0054  ap:0.4032
+25-12-30 08:14:44.539 - INFO: not save best
+25-12-30 08:21:29.086 - INFO: epoch [97/100], loss_query:0.9980 loss_TAC_query:0.0247  loss_TAC_Retrived:0.0011 loss_CQC:0.0080  ap:0.4033
+25-12-30 08:21:29.086 - INFO: not save best
+25-12-30 08:28:08.026 - INFO: epoch [98/100], loss_query:0.9959 loss_TAC_query:0.0109  loss_TAC_Retrived:0.0003 loss_CQC:0.0073  ap:0.4035
+25-12-30 08:28:08.027 - INFO: not save best
+25-12-30 08:34:50.054 - INFO: epoch [99/100], loss_query:1.0037 loss_TAC_query:0.0154  loss_TAC_Retrived:0.0003 loss_CQC:0.0027  ap:0.4034
+25-12-30 08:34:50.054 - INFO: not save best
+25-12-30 08:41:34.222 - INFO: epoch [100/100], loss_query:1.0006 loss_TAC_query:0.0082  loss_TAC_Retrived:0.0005 loss_CQC:0.0050  ap:0.4034
+25-12-30 08:41:34.223 - INFO: not save best

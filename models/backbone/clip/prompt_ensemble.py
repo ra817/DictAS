@@ -6,6 +6,12 @@ import numpy as np
 
 
 def encode_text_with_prompt_ensemble(model, objs, tokenizer, device):
+    """
+        here we have 7 normal phase(prompt normal)
+        5 abnormal phase(prompt abnormal)
+        prompt template is 35.
+        So, for each object we have total of (7*53 + 5*35) 420 prompts
+    """
     prompt_normal = ['{}', 'flawless {}', 'perfect {}', 'unblemished {}', '{} without flaw', '{} without defect', '{} without damage']
     prompt_abnormal = ['damaged {}', 'broken {}', '{} with flaw', '{} with defect', '{} with damage']
     prompt_state = [prompt_normal, prompt_abnormal]
@@ -36,6 +42,7 @@ def encode_text_with_prompt_ensemble(model, objs, tokenizer, device):
 
         text_features = torch.stack(text_features, dim=1).to(device)
         text_prompts[obj] = text_features
+
 
     return text_prompts
 

@@ -610,6 +610,7 @@ class VisionTransformer(nn.Module):
 
         if self.proj is not None:
             x = x @ self.proj 
+            
         return x, patch_tokens, patch_tokens
 
 

@@ -80,20 +80,14 @@ def visualization(save_root, pic_name, raw_image, raw_anomaly_map, raw_gt, the =
     if not os.path.exists(save_npy):
         os.makedirs(save_npy)
 
-    
-    
-
-    
     assert len(raw_image.shape) == 3 and len(raw_anomaly_map.shape) == 2 and len(raw_gt.shape) == 2
     map = raw_anomaly_map
     gt = raw_gt
 
-    #np.save(os.path.join(save_npy, "text_"+pic_name.replace('bmp', 'npy')), text)
-    #np.save(os.path.join(save_npy, "vis_map_"+pic_name.replace('bmp', 'npy')), map)
-    #np.save(os.path.join(save_npy, "gt_"+pic_name.replace('bmp', 'npy')), gt)
+    # np.save(os.path.join(save_npy, "text_"+pic_name.replace('bmp', 'npy')), text)
+    # np.save(os.path.join(save_npy, "vis_map_"+pic_name.replace('bmp', 'npy')), map)
+    # np.save(os.path.join(save_npy, "gt_"+pic_name.replace('bmp', 'npy')), gt)
 
-    
-    
     img = cv2.cvtColor(raw_image , cv2.COLOR_BGR2RGB)
     map = normalize(raw_anomaly_map)
     gt = normalize(raw_gt)
@@ -116,10 +110,10 @@ def visualization(save_root, pic_name, raw_image, raw_anomaly_map, raw_gt, the =
     vis_map_crop = cv2.drawContours(vis_map_crop, ground_truth_contours, -1, (0, 255, 0), 2)  
 
     zong = he_cheng([raw_image, vis_map, vis_map_crop, vis_gt])
-    #cv2.imwrite(os.path.join(save_root, "vis_map_"+pic_name), vis_map)
-    #cv2.imwrite(os.path.join(save_root, "vis_gt_"+pic_name), vis_gt)
-    #cv2.imwrite(os.path.join(save_root, "vis_map_binary_"+pic_name), vis_map_binary)
-    #cv2.imwrite(os.path.join(save_root, "vis_map_crop_"+pic_name), vis_map_crop)
+    cv2.imwrite(os.path.join(save_root, "vis_map_"+pic_name), vis_map)
+    cv2.imwrite(os.path.join(save_root, "vis_gt_"+pic_name), vis_gt)
+    cv2.imwrite(os.path.join(save_root, "vis_map_binary_"+pic_name), vis_map_binary)
+    cv2.imwrite(os.path.join(save_root, "vis_map_crop_"+pic_name), vis_map_crop)
     cv2.imwrite(os.path.join(save_root, "vis_zong_"+pic_name.replace('bmp', 'png')), zong)
 
 
@@ -227,7 +221,7 @@ def calcuate_metric_pixel(results, obj_list, logger, alpha = 0.9, sigm = 4, args
             filename = img_path_list[i].split('/')[-1]
             save_vis = os.path.join(args.save_path, 'imgs', obj, cls)
             vis_img = vis_img = cv2.resize(cv2.imread(img_path_list[i]), (args.image_size, args.image_size))
-            visualization(save_root= save_vis, pic_name=filename, raw_image= vis_img, raw_anomaly_map= np.squeeze(pr_px[i]), raw_gt= np.squeeze(gt_px[i]), the = best_threshold)
+            #visualization(save_root= save_vis, pic_name=filename, raw_image= vis_img, raw_anomaly_map= np.squeeze(pr_px[i]), raw_gt= np.squeeze(gt_px[i]), the = best_threshold)
         
         table.append(str(np.round(auroc_px * 100, decimals=2)))
         table.append(str(np.round(aupro_px * 100, decimals=2)))
