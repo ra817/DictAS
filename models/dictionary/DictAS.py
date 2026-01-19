@@ -1,29 +1,30 @@
 import torch 
+import numpy as np 
 from torch import Tensor, nn 
 from torch.nn import functional as F 
 from models.dictionary.SPM import Sparse_Lookup
-import numpy as np 
 from torch.nn.functional import scaled_dot_product_attention
 
 
 #used to get image level anomlay score(generally used for benching with large publicly availabel test data)
 class Global_Feature(nn.Module):
-    def __init__(self, dim_i, dim_hid, dim_out, k):
+    def __init__(self, dim_i, dim_hid, dim_out, k):     #dim_i=768, dim_hid=384, dim_out=512, k=4
 
         super(Global_Feature, self).__init__()
         
-        self.fuse_modules = nn.Linear(dim_i * k, dim_hid)
-        self.compress =  nn.Linear(dim_hid, 1)
-        self.post_process = nn.Linear(dim_hid, dim_out)
+        self.fuse_modules = nn.Linear(dim_i * k, dim_hid)  #x=392,3072     #3072,384 
+        self.compress =  nn.Linear(dim_hid, 1)             #392,384  384,1
+        self.post_process = nn.Linear(dim_hid, dim_out)    #           384,512
 
 
     def forward(self, inps):
         x = torch.cat(inps, dim = 2)
-        x = self.fuse_modules(x)
+        x = self.fuse_modules(x)     #B,L,C
         x_temp = self.compress(x)
         attention_weights = nn.Softmax(dim=1)(x_temp) 
         x = torch.sum(attention_weights * x, dim=1)
         x = self.post_process(x)
+
         return x
     
 
@@ -152,6 +153,10 @@ class MyDictionary(nn.Module):
         F_K = self.Key_Generator(patch_feature_support).reshape(B, M, self.num_heads, C // self.num_heads)
         F_V = self.Value_Generator(patch_feature_support).reshape(B, M, self.num_heads, C // self.num_heads)
 
+        # F_Q = patch_feature_query.unsqueeze(2)
+        # F_K = patch_feature_support.unsqueeze(2)
+        # F_V = patch_feature_support.unsqueeze(2)
+
         #Dictionary Lookup
         attn = torch.einsum('bnkc,bmkc->bknm', F_Q, F_K) * self.scale
         attn = self.SPM(attn, adim = -1)
@@ -187,12 +192,16 @@ class MyDictionary(nn.Module):
                     else:
                         img_ano_feature_padding = img_ano_feature.clone()
                         img_good_feature_padding = img_good_feature.clone()
+
                     Retrived_Result = self.Lookup(img_ano_feature_padding.reshape(B,-1, L).permute(0,2,1), img_good_feature_padding.reshape(B,-1, L).permute(0,2,1))
+
                     if kernel_size == 1:
                         Retrived_list_ClS.append(Retrived_Result.clone())
                     Retrived_Result = Retrived_Result.permute(0, 2, 1).view(B,-1,H,H)   
 
+                    #raw anomaly map/score(patchwise)
                     dis_all = 1 - F.cosine_similarity(img_ano_feature_padding, Retrived_Result, dim=1).unsqueeze(1)
+
                     if gt_normal is not None:
                         dis_n = dis_all * gt_normal
                     if gt_abnormal is not None:
@@ -222,6 +231,7 @@ class MyDictionary(nn.Module):
             B, L, C = img_ano_features[0].shape
             B1, _, _ = img_good_features[0].shape
             H = int(np.sqrt(L))
+
             for i in range(len(img_ano_features)):
                 con_list = []
                 img_ano_feature = img_ano_features[i].permute(0, 2, 1).view(B,-1,H,H)
@@ -236,6 +246,7 @@ class MyDictionary(nn.Module):
                         img_good_feature_padding = img_good_feature.clone()
                     
                     img_good_feature_padding = img_good_feature_padding.reshape(B1,-1, L).permute(0,2,1).reshape(-1, C).unsqueeze(0)
+
                     Retrived_Result = self.Lookup(img_ano_feature_padding.reshape(B,-1, L).permute(0,2,1), img_good_feature_padding)
                     if kernel_size == 1:
                         Retrived_list_ClS.append(Retrived_Result.clone())
@@ -243,7 +254,9 @@ class MyDictionary(nn.Module):
                     con = F.cosine_similarity(img_ano_feature_padding, Retrived_Result, dim=1)
                     con_list.append(con)
                 anomaly_map_list.extend(con_list)
+
             for i in range(len(anomaly_map_list)):
                 anomaly_map = anomaly_map_list[i]
                 anomaly_map_list[i] = (1 - (anomaly_map + 1)*0.5)
+
             return anomaly_map_list, Retrived_list_ClS

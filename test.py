@@ -110,10 +110,8 @@ def test(args):
     results['gt_sp'] = []
     results['path'] = []
 
-    
     idx = 0
 
-    
     # text prompt
     with torch.no_grad():
         obj_list = test_data.get_cls_names()
@@ -130,7 +128,6 @@ def test(args):
         gt_ano = items['img_ano_mask'].squeeze().to(device)
         gt_ano[gt_ano > 0.5], gt_ano[gt_ano< 0.5] = 1, 0
 
-
         results['cls_names'].append(cls_name[0])
         results['imgs_masks'].append(gt_ano)
         results['gt_sp'].append(items['anomaly'].item())
@@ -142,8 +139,8 @@ def test(args):
                 text_features.append(text_prompts[cls])
             text_features = torch.stack(text_features, dim=0).float()
             
-
             image_ano_features, _,  patch_ano_tokens = model_CLIP.encode_image(img_ano, features_list)
+
             if cls_name[0] not in mem_good.keys():
                 mem_good = {}
                 all_patch_tokens = [[] for _ in range(len(features_list))]
@@ -156,8 +153,10 @@ def test(args):
                     patch_good_tokens = [torch.cat(all_patch_token, dim = 0) for all_patch_token in all_patch_tokens]
                 else:
                     image_good_features, _ ,  patch_good_tokens = model_CLIP.encode_image(img_good, features_list)
+
                 patch_good_tokens = [norm_patch(patch_good_token, True) for patch_good_token in patch_good_tokens]
                 mem_good[cls_name[0]] = copy.deepcopy(patch_good_tokens)
+
             else:
                 patch_good_tokens = copy.deepcopy(mem_good[cls_name[0]])
             image_ano_features = image_ano_features / image_ano_features.norm(dim = -1, keepdim = True)
@@ -167,7 +166,7 @@ def test(args):
             anomaly_map_list, Retrived_list_ClS =  Mymodel(patch_ano_tokens,patch_good_tokens, mode = "test")
 
             pro_img_query = (100.0 * image_ano_features.unsqueeze(1) @ text_features).softmax(dim=-1).squeeze()
-            results['pr_sp'].append(pro_img_query[1].cpu().item())
+            results['pr_sp'].append(pro_img_query[1].cpu().item())   
 
             anomaly_maps = []
             for i in range(len(anomaly_map_list)):
@@ -217,16 +216,16 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser("DictAS", add_help=True)
     parser.add_argument("--data_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/dictas", help="path to test dataset")
     parser.add_argument("--anomaly_source_path", type=str, default="./datasets/DTD/images", help="Path to DTD dataset for anomaly synthesis")
-    parser.add_argument("--save_path", type=str, default='results/V2', help='path to save results')
-    parser.add_argument("--checkpoint_path", type=str, default="checkpoints/dict_weights/clip_base/train_mvtec/epoch_5.pth", help='path to checkpoint')
-    parser.add_argument("--config_path", type=str, default='checkpoints/backbone_weights/clip/Vit-B-16.json', help="model configs")
+    parser.add_argument("--save_path", type=str, default='results/V2_dict_clip_base', help='path to save results')
+    parser.add_argument("--checkpoint_path", type=str, default="checkpoints/dict/clip_base/train_visa/epoch_30.pth", help='path to checkpoint')
+    parser.add_argument("--config_path", type=str, default='checkpoints/backbone/clip/Vit-B-16.json', help="model configs")
     # model
     parser.add_argument("--dataset", type=str, default='mvtec', help="test dataset")  # mvtec, visa, MPDD, BTAD, mvtec3D, RESC, BrasTS
-    parser.add_argument("--image_size", type=int, default= 336, help="image size")
+    parser.add_argument("--image_size", type=int, default=224, help="image size")
     parser.add_argument("--model", type=str, default="ViT-L-14-336", help="model used")
     parser.add_argument("--pretrained", type=str, default="openai", help="Source of pretrained weight")
-    parser.add_argument("--features_list", type=int, nargs="+", default=[6, 12, 18, 24], help="features used")
-    parser.add_argument("--pretrained_path", type=str, default="checkpoints/backbone_weights/clip/VIT_b_16_clip.pt", help="Original pretrained CLIP path")
+    parser.add_argument("--features_list", type=int, nargs="+", default=[2,5,7,11], help="features used")
+    parser.add_argument("--pretrained_path", type=str, default="checkpoints/backbone/clip/VIT_b_16_clip.pt", help="Original pretrained CLIP path")
 
     parser.add_argument('--TEST_For_BESTSEGMENTATION', type=lambda x: x.lower() == 'true',
                         default=True, choices=[True, False], help= "True for the best segmentation performance, and False for the best classification performance.")

@@ -90,9 +90,8 @@ class MyDataset(data.Dataset):
 		
 		
 		#validation/testing dataset path
-		if os.path.exists(f"./fix_few_path/{dataset}/fix_{k_shot}-shot.txt"):
-			self.few_data_path = f"./fix_few_path/{dataset}/fix_{k_shot}-shot.txt"
-			print(self.few_data_path)
+		if os.path.exists(f"./dataset/val_data_path/{dataset}/fix_{k_shot}-shot.txt"):
+			self.few_data_path = f"./dataset/val_data_path/{dataset}/fix_{k_shot}-shot.txt"
 		else:
 			self.few_data_path = None
 
@@ -296,6 +295,7 @@ class MyDataset(data.Dataset):
 				img_ano_mask = Image.fromarray(img_ano_mask.astype(np.uint8) * 255, mode='L')
 			else:
 				img_ano_mask = Image.fromarray(np.zeros((img_ano.size[1], img_ano.size[0])), mode='L')
+		
 			img_ano = img_ano.resize((1024, 1024), Image.BICUBIC)
 			img_ano_mask = img_ano_mask.resize((1024, 1024), Image.NEAREST)
 
@@ -312,14 +312,12 @@ class MyDataset(data.Dataset):
 				#randomly picking image sythetic anomaly creation
 				anomaly_source_idx = torch.randint(0, len(self.anomaly_source_paths), (1,)).item()
 				img_ano, img_ano_mask, anomaly = self.augment_image(img_ano, img_ano_mask, self.anomaly_source_paths[anomaly_source_idx])
+
 			img_ano = self.transform(img_ano) if self.transform is not None else img_ano 
-			img_ano_mask = self.target_transform(
-				img_ano_mask) if self.target_transform is not None and img_ano_mask is not None else img_ano_mask
+			img_ano_mask = self.target_transform(img_ano_mask) if self.target_transform is not None and img_ano_mask is not None else img_ano_mask
 			
 			img_good = self.transform(img_good) if self.transform is not None else img_good
-
-			img_good_mask = self.target_transform(
-				img_good_mask) if self.target_transform is not None and img_good_mask is not None else img_good_mask
+			img_good_mask = self.target_transform(img_good_mask) if self.target_transform is not None and img_good_mask is not None else img_good_mask
 			
 			return {'img_ano': img_ano, 'img_ano_mask': img_ano_mask, 'img_good': img_good, 'img_good_mask':img_good_mask, 'cls_name': cls_name,  "anomaly":anomaly}
 
@@ -329,6 +327,7 @@ class MyDataset(data.Dataset):
 			img_ano_path, mask_ano_path, cls_name, specie_name, anomaly = data['img_path'], data['mask_path'], data['cls_name'], \
 													data['specie_name'], data['anomaly']
 			img_good_path_list = self.few_data_list[cls_name]
+
 			img_ano = Image.open(os.path.join(self.root, img_ano_path)).convert("RGB")
 			if anomaly == 1: 
 				img_ano_mask = np.array(Image.open(os.path.join(self.root, mask_ano_path)).convert('L')) > 0

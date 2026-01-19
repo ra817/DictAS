@@ -42,6 +42,7 @@ def _transform_test(n_px):
 #         for f in os.listdir(dir_path)
 #         if f.lower().endswith(valid_exts)
 #     ])
+
 def load_nth_image_from_each_subdir(parent_dir, n=1):
     """
     parent_dir : path containing subdirectories
@@ -56,14 +57,15 @@ def load_nth_image_from_each_subdir(parent_dir, n=1):
         if not os.path.isdir(subdir_path):
             continue
 
-        images = sorted([
-            os.path.join(subdir_path, f)
+        images = sorted([os.path.join(subdir_path, f)
             for f in os.listdir(subdir_path)
             if f.lower().endswith(valid_exts)
         ])
-
         if len(images) >= n:
             selected_images.append(images[n - 1])  # n-th image (1-based)
+        
+        if len(selected_images)>10:
+            break
 
     return selected_images
 
@@ -130,14 +132,12 @@ def test(args):
     query_mask_path = "demo/pcb/pcb_0001_NG_QS_C1_20231028094158.png"
     support_dir = "/SOLUTION/Anomaly_detection_project/dataset/Real-IAD/realiad_1024/pcb/OK"
     support_path_list = load_nth_image_from_each_subdir(support_dir, n=1)
-    print(len(support_path_list))
-    exit(0)
 
 
     # query_img_path = "./demo_example/cable/mvtec_bent_wire_000521.bmp"
     # query_mask_path = "./demo_example/cable/mvtec_bent_wire_000521.png"
     # # query_mask_path = None
-    # support_path_list = ["./demo_example/cable/normal_support_images/mvtec_000368.bmp", 
+    # support_path_list = ["./demo_example/cable/normal_support_images/mvtec_000368.bmp",    
     #                      "./demo_example/cable/normal_support_images/mvtec_000380.bmp",
     #                      "./demo_example/cable/normal_support_images/mvtec_000444.bmp",
     #                      "./demo_example/cable/normal_support_images/mvtec_000491.bmp"]
@@ -158,6 +158,7 @@ def test(args):
         query_mask = transform_gt(query_mask).to(device)
 
     support_img_list = [transform_image(Image.open(support_path)) for support_path in support_path_list]
+
     support_img = torch.stack(support_img_list, dim = 0).to(device)
 
     with torch.no_grad():
@@ -180,15 +181,18 @@ def test(args):
         patch_ano_tokens = [Mymodel.Value_Generator(patch_ano_token) for patch_ano_token in patch_ano_tokens]
 
         anomaly_map_list, Retrived_list_ClS =  Mymodel(patch_ano_tokens,patch_good_tokens, mode = "test")
+
         anomaly_maps = []
         for i in range(len(anomaly_map_list)):
             anomaly_map = anomaly_map_list[i]
-            anomaly_map = F.interpolate(anomaly_map.unsqueeze(1),
-                                        size = img_size, mode = 'bilinear', align_corners=True)
+            anomaly_map = F.interpolate(anomaly_map.unsqueeze(1),size = img_size, mode = 'bilinear', align_corners=True)
             anomaly_map = anomaly_map.squeeze()
             anomaly_maps.append(anomaly_map)
         anomaly_map = torch.mean(torch.stack(anomaly_maps,dim = 0), dim = 0).cpu().numpy()
         anomaly_map = gaussian_filter(anomaly_map, sigma=args.sigm) 
+        print(anomaly_map.max())
+        print(anomaly_map.min())
+        print(anomaly_map.shape)
         iou = cal_iou(query_mask.cpu().numpy().ravel(), (anomaly_map.ravel()> 0.1)) 
         print(iou)
 
@@ -217,7 +221,7 @@ def test(args):
     vis_gt = cv2.cvtColor(vis_gt, cv2.COLOR_RGB2BGR)
     vis_img_new = cv2.cvtColor(vis_img, cv2.COLOR_RGB2BGR)
     jian = np.ones((vis_img_new.shape[0], 10, 3),dtype=np.uint8) * 255
-    prediction_mask = ( anomaly_map> 0.1).astype(np.uint8)
+    prediction_mask = (anomaly_map> 0.1).astype(np.uint8)
     prediction_mask = prediction_mask * 255
 
     prediction_mask_3ch = cv2.cvtColor(prediction_mask, cv2.COLOR_GRAY2BGR)
@@ -238,7 +242,7 @@ def test(args):
     if not os.path.exists(save_vis):
         os.makedirs(save_vis)
 
-    cv2.imwrite(os.path.join(save_vis, "result_" + os.path.basename(query_img_path).replace("bmp", "png")), vis_con)
+    cv2.imwrite(os.path.join(save_vis, "1result_" + os.path.basename(query_img_path).replace("bmp", "png")), vis_con)
 
 
 import shutil
@@ -253,15 +257,15 @@ if __name__ == '__main__':
     parser.add_argument("--data_path", type=str, default="/SOLUTION/Defect_detection_pcb/dataset/Demo/training_arch_4/arch_4_img_1.jpg", help="path to test dataset")
     parser.add_argument("--anomaly_source_path", type=str, default="./datasets/dtd/images", help="Path to DTD dataset for anomaly synthesis")
     parser.add_argument("--save_path", type=str, default='./demo/pcb1', help='path to save results')
-    parser.add_argument("--checkpoint_path", type=str, default="checkpoints/dict_weights/clip_base/train_mvtec/epoch_5.pth", help='path to checkpoint')
-    parser.add_argument("--config_path", type=str, default='checkpoints/backbone_weights/clip/Vit-B-16.json', help="model configs")
+    parser.add_argument("--checkpoint_path", type=str, default="checkpoints/dict/clip_base/train_visa/epoch_30.pth", help='path to checkpoint')
+    parser.add_argument("--config_path", type=str, default='checkpoints/backbone/clip/Vit-B-16.json', help="model configs")
     # model
 
     parser.add_argument("--image_size", type=int, default= 224, help="image size")
     parser.add_argument("--model", type=str, default="ViT-L-14-336", help="model used")
     parser.add_argument("--pretrained", type=str, default="openai", help="Source of pretrained weight")
     parser.add_argument("--features_list", type=int, nargs="+", default=[2,5,7,11], help="features used")
-    parser.add_argument("--pretrained_path", type=str, default="checkpoints/backbone_weights/clip/VIT_b_16_clip.pt", help="Original pretrained CLIP path")
+    parser.add_argument("--pretrained_path", type=str, default="checkpoints/backbone/clip/VIT_b_16_clip.pt", help="Original pretrained CLIP path")
 
     parser.add_argument('--TEST_For_BESTSEGMENTATION', type=lambda x: x.lower() == 'true',
                         default=True, choices=[True, False], help= "True for the best segmentation performance, and False for the best classification performance.")

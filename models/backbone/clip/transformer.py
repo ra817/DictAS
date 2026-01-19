@@ -595,6 +595,7 @@ class VisionTransformer(nn.Module):
 
         #x = self.transformer(x)
         x, attn, patch_tokens = self.transformer(x, out_layers)
+
         # attn = attn[0, 0, 1:].view(14, 14)  # 49
         B, C, L = attn[0].shape
         H = int(np.sqrt(L-1))
@@ -612,55 +613,6 @@ class VisionTransformer(nn.Module):
             x = x @ self.proj 
             
         return x, patch_tokens, patch_tokens
-
-
-
-  
-
-
-if __name__ == '__main__':
-    '''
-    input = torch.rand((1,3,224,224),dtype = torch.float32)
-    model = VisionTransformer(224, 16, 728, 2, 2, 1024)
-    print(input.size())
-    result = model(input)
-    print(result.size())
-    print(result)
-    '''
-
-    from torchvision.transforms import Compose, Resize, CenterCrop, ToTensor, Normalize
-    from PIL import Image
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    def _convert_image_to_rgb(image):
-        return image.convert("RGB")
-    try:
-        from torchvision.transforms import InterpolationMode
-        BICUBIC = InterpolationMode.BICUBIC
-    except ImportError:
-        BICUBIC = Image.BICUBIC
-    def _transform(n_px):
-        return Compose([
-            Resize(n_px, interpolation=BICUBIC),
-            CenterCrop(n_px),
-            _convert_image_to_rgb,
-            ToTensor(),
-            Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711)),
-        ])
-    transform = _transform((336,336))
-    #image2 = transform(Image.open("Dog.jpeg")).unsqueeze(0).to(device)
-    #image3 = transform(Image.open("Cat.jpg")).unsqueeze(0).to(device)
-
-    image2 = torch.rand((1,3,336,336),dtype = torch.float32).to(device)
-    image3 = torch.rand((1,3,336,336),dtype = torch.float32).to(device)
-
-    model = VisionTransformer(336, 16, 728, 12, 2, 1024).to(device)
-    with torch.no_grad():
-        print(torch.equal(image2,image3)) 
-
-        image_features3,_ = model(image3, [3,6,9])
-
-        image_features2,_ = model(image2,[3,6,9])
-        print(torch.equal(image_features2,image_features3))
 
 
 

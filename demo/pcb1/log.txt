@@ -1,16 +1,16 @@
-25-12-31 11:31:17.745 - INFO: data_path: /SOLUTION/Defect_detection_pcb/dataset/Demo/training_arch_4/arch_4_img_1.jpg
-25-12-31 11:31:17.745 - INFO: anomaly_source_path: ./datasets/dtd/images
-25-12-31 11:31:17.746 - INFO: save_path: ./demo/pcb1
-25-12-31 11:31:17.746 - INFO: checkpoint_path: checkpoints/dict_weights/clip_base/train_mvtec/epoch_5.pth
-25-12-31 11:31:17.746 - INFO: config_path: checkpoints/backbone_weights/clip/Vit-B-16.json
-25-12-31 11:31:17.746 - INFO: image_size: 224
-25-12-31 11:31:17.746 - INFO: model: ViT-L-14-336
-25-12-31 11:31:17.746 - INFO: pretrained: openai
-25-12-31 11:31:17.746 - INFO: features_list: [2, 5, 7, 11]
-25-12-31 11:31:17.746 - INFO: pretrained_path: checkpoints/backbone_weights/clip/VIT_b_16_clip.pt
-25-12-31 11:31:17.746 - INFO: TEST_For_BESTSEGMENTATION: True
-25-12-31 11:31:17.746 - INFO: scale_list: [1, 3]
-25-12-31 11:31:17.746 - INFO: alpha: 0.5
-25-12-31 11:31:17.746 - INFO: sigm: 6
-25-12-31 11:31:17.746 - INFO: device_id: 0
-25-12-31 11:31:17.746 - INFO: seed: 222
+26-01-19 14:38:28.601 - INFO: data_path: /SOLUTION/Defect_detection_pcb/dataset/Demo/training_arch_4/arch_4_img_1.jpg
+26-01-19 14:38:28.601 - INFO: anomaly_source_path: ./datasets/dtd/images
+26-01-19 14:38:28.602 - INFO: save_path: ./demo/pcb1
+26-01-19 14:38:28.602 - INFO: checkpoint_path: checkpoints/dict/clip_base/train_visa/epoch_30.pth
+26-01-19 14:38:28.602 - INFO: config_path: checkpoints/backbone/clip/Vit-B-16.json
+26-01-19 14:38:28.602 - INFO: image_size: 224
+26-01-19 14:38:28.602 - INFO: model: ViT-L-14-336
+26-01-19 14:38:28.602 - INFO: pretrained: openai
+26-01-19 14:38:28.602 - INFO: features_list: [2, 5, 7, 11]
+26-01-19 14:38:28.602 - INFO: pretrained_path: checkpoints/backbone/clip/VIT_b_16_clip.pt
+26-01-19 14:38:28.602 - INFO: TEST_For_BESTSEGMENTATION: True
+26-01-19 14:38:28.602 - INFO: scale_list: [1, 3]
+26-01-19 14:38:28.602 - INFO: alpha: 0.5
+26-01-19 14:38:28.602 - INFO: sigm: 6
+26-01-19 14:38:28.602 - INFO: device_id: 0
+26-01-19 14:38:28.602 - INFO: seed: 222

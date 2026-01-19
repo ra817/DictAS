@@ -35,6 +35,7 @@ def norm_patch(patches, is_forget = False):
         patches = patches[:,1:,:]
     return patches
 
+
 def cal_iou(gt,pre):
     ground_truth = gt.astype(np.uint8)
     prediction = pre.astype(np.uint8)
@@ -61,6 +62,7 @@ def normalize(pred, max_value=None, min_value=None):
     else:
         return (pred - min_value) / (max_value - min_value)
     
+    
 def setup_seed(seed):  # random seed
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
@@ -72,7 +74,7 @@ def setup_seed(seed):  # random seed
 def BESTSEGMENTATION(args, cls_name):
     if args.TEST_For_BESTSEGMENTATION:
         if args.dataset in ["BTAD", "mvtec"]:
-            features_list = [6, 12]
+            features_list = [2,5,7,11]
         else:
             features_list = args.features_list
 

@@ -1,2 +1,0 @@
-RESC/retina/train/good/RESC_000564.bmp
-RESC/retina/train/good/RESC_003992.bmp

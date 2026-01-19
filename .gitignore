@@ -3,4 +3,11 @@ mvisa/
 *pt
 *pth
 
-exp.ipynb
+*png
+*jpg
+*txt
+
+results/*
+demo/*
+
+*ipynb
